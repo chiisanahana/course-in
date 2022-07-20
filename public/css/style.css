@@ -1,0 +1,22 @@
+.overlay-dark {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+
+.overlay-dark:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lesson-card img {
+    height: 12vw;
+    object-fit: cover;
+}
+
+.lesson-select img {
+    height: 100%;
+    object-fit: cover;
+}
+
+#paymentMethod .accordion-button::after {
+    display: none;
+}

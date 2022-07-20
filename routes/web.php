@@ -1,0 +1,52 @@
+<?php
+
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\TimetableController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Middleware\VerifyLogin;
+use App\Http\Middleware\VerifyLogout;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Bisa diakses semua user
+Route::get('/courses-in-demand', [LandingPageController::class, 'list_course_in_demand']);
+Route::get('/lessons/search', [LessonController::class, 'search'])->name('lessons.search');
+Route::resource('lessons', LessonController::class);
+Route::resource('categories', CategoryController::class);
+
+// Hanya bisa diakses guest
+Route::middleware([VerifyLogout::class])->group(function () {
+    Route::get('/', [LandingPageController::class, 'course_in_demand'])->name('landing-page');
+    Route::get('/login', [LoginController::class, 'viewLogin'])->name('view-login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::get('/register', [RegisterController::class, 'viewRegister'])->name('view-register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register');
+});
+
+// Hanya bisa diakses logged-in users
+Route::middleware([VerifyLogin::class])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
+    Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::post('/wishlist/{lesson}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    Route::get('/schedules/show/{date}', [ScheduleController::class, 'show'])->name('schedules.show');
+    Route::resource('schedules', ScheduleController::class)->except(['show']);
+    Route::resource('timetables', TimetableController::class);
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
