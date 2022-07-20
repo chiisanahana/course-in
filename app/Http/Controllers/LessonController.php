@@ -80,10 +80,10 @@ class LessonController extends Controller
         return view('lessons.detail', [
             'lesson' => Lesson::whereId($lesson->id)->first(),
             'schedules' => Schedule::where('lesson_id', $lesson->id)
-                            ->where('date', '>', Carbon::yesterday())
-                            ->orderBy('date')
-                            ->orderBy('start_lesson')
-                            ->simplePaginate(5)
+                ->where('date', '>', Carbon::yesterday())
+                ->orderBy('date')
+                ->orderBy('start_lesson')
+                ->simplePaginate(5)
         ]);
     }
 

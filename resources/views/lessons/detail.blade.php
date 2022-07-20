@@ -50,12 +50,14 @@
             <p class="h5">Join the {{ Str::lower($lesson->type) }} now!</p>
             <div class="h5 text-primary fw-bold">{{ $lesson->price }}</div>
             <div class="d-flex gap-3 mt-5">
-                @if (auth()->guard('course')->check())
+                @if (auth()->guard('course')->check() &&
+                    auth()->guard('course')->user()->id == $lesson->course_id)
                     {{-- Button untuk edit lesson --}}
                     <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-outline-primary col-5 fs-5 py-1">
                         Edit lesson
                     </a>
-                @else
+                {{-- Untuk trainee atau guest --}}
+                @elseif (!auth()->guard('course')->check())
                     @if ($schedules->count())
                         {{-- Button untuk booking, dengan payment method --}}
                         <div class="accordion col-5" id="paymentMethod">
@@ -69,8 +71,9 @@
                                 </h2>
                                 <div id="payment_methods" class="accordion-collapse collapse">
                                     <div class="accordion-body px-0 pb-2">
-                                        <a class="dropdown-item h5" href="#">Pay by card</a>
-                                        <a class="dropdown-item h5" href="#">Pay by QRIS</a>
+                                        <a class="dropdown-item h5" href="{{ route('view-payment', $lesson->id) }}">
+                                            Pay by card</a>
+                                        <a class="dropdown-item h5" href="{{ route('showQr') }}">Pay by QRIS</a>
                                     </div>
                                 </div>
                             </div>

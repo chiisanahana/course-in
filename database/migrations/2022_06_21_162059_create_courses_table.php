@@ -22,6 +22,7 @@ class CreateCoursesTable extends Migration
             $table->string('wa_number');
             $table->longText('address');
             $table->string('card_number')->nullable();
+            $table->boolean('active')->default(1);  // status sedang libur atau engga
             $table->rememberToken();
             $table->timestamps();
         });

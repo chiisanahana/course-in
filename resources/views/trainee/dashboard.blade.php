@@ -5,7 +5,6 @@
 @section('content')
     <h4 class="mb-1">Welcome, {{ auth()->guard('user')->user()->name }}!</h4>
     <small class="text-muted">Let's learn something new today!</small>
-    <a href="{{ route('view-payment', 1) }}">Go to Payment</a>
 
     {{-- Top 3 upcoming course dari jadwal les user --}}
     <h5 class="fw-bold mt-4 mb-2">Upcoming Courses</h5>

@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary py-0">
     <div class="container-fluid">
         {{-- Jika belum login, logo mengarah ke landing page --}}
-        @if (!(
-            auth()->guard('user')->check() ||
+        @if (!(auth()->guard('user')->check() ||
             auth()->guard('course')->check()
         ))
             <a class="navbar-brand" href="{{ route('landing-page') }}">
                 <img src="/assets/logo.png" alt="Logo" width="50">
             </a>
-        {{-- Jika sudah login, logo mengarah ke dashboard? --}}
+            {{-- Jika sudah login, logo mengarah ke dashboard? --}}
         @else
             <a class="navbar-brand" href="{{ route('dashboard') }}">
                 <img src="/assets/logo.png" alt="Logo" width="50">
@@ -42,8 +41,10 @@
                 {{-- Pengecekan untuk course --}}
                 <ul class="col-md-3 navbar-nav gap-3">
                     <div class="my-auto">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
-                            class="rounded-circle" alt="Profile" width="40">
+                        <a href="{{ route('view-profile',auth()->guard('course')->user()->id) }}">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
+                                class="rounded-circle" alt="Profile" width="40">
+                        </a>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="m-0 text-light">{{ auth()->guard('course')->user()->name }}</h6>
@@ -59,8 +60,10 @@
                 {{-- Pengecekan untuk trainee --}}
                 <ul class="ms-auto col-md-2 navbar-nav gap-3">
                     <div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
-                            class="rounded-circle" alt="Profile" width="40">
+                        <a href="{{ route('view-profile',auth()->guard('user')->user()->id) }}">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
+                                class="rounded-circle" alt="Profile" width="40">
+                        </a>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="m-0 text-light">{{ Str::words(auth()->guard('user')->user()->name,1,'') }}</h6>

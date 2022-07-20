@@ -28,14 +28,14 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="https://awsimages.detik.net.id/community/media/visual/2020/08/28/kursus-baking-online.jpeg?w=700&q=90" class="d-block w-100">
+                            <img src="/storage/{{ $lesson->image }}" class="d-block w-100">
                         </div>
-                        <div class="carousel-item">
+                        <!-- <div class="carousel-item">
                             <img src="https://www.washingtonpost.com/resizer/LYYkc1FmbwpZYFzU0IeEcRKP9Ww=/arc-anglerfish-washpost-prod-washpost/public/QABCS7GJJYI6XBYIMSMR6KWPFA.jpg" class="d-block w-100">
                         </div>
                         <div class="carousel-item">
                             <img src="https://asset.kompas.com/crops/-yBjbIrgjzRHRm9IdGFAB0SckGQ=/0x0:1000x667/750x500/data/photo/2020/08/24/5f435a57bc02d.jpg" class="d-block w-100">
-                        </div>
+                        </div> -->
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#my" data-bs-slide="prev">
                         <div class="icon">
@@ -55,44 +55,28 @@
                 <p class="dis mb-3 different">Lesson type:</p>
                 <div class="dis">
                     <p class="black">
-                        <span class="fas fa-arrow-right mb-3 pe-2"></span>Course</p>
-                    {{-- <p class="white">
-                        <span class="fas fa-arrow-right mb-3 pe-2"></span>White
+                        <span class="fas fa-arrow-right mb-3 pe-2"></span>Course
                     </p>
-                    <p class="pastel"><span class="fas fa-arrow-right mb-3 pe-2"></span>Pastel
-                    </p> --}}
                 </div>
-                {{-- <div>
-                    <p class="dis footer my-3">Here is a quick guide on how to apply them</p>
-                </div>  --}}
             </div> 
         </div> 
 
         <div class="d-flex flex-column">
-            <form action="{{route('validate-promo', $lesson->id)}}" method="post">
-                @csrf
-                <div class="box-2"> 
-                    <div class="box-inner-2">
-                        <div> 
-                            <p class="fw-bold">Payment Details</p> 
-                            <p class="dis mb-3">Complete your purchase by providing your payment details</p> 
-                        </div> 
-                        <p class="dis fw-bold mb-2">Discount Code</p> 
-                        {{-- <select class="form-select">
-                            <option value="" selected>Select your promo</option>
-                            @foreach ($promos as $promo)
-                                <option value="{{ $promo->code }}">{{ $promo->code }}</option>
-                            @endforeach
-                        </select> --}}
-                        <input class="form-control text-uppercase @error('promo_code') is-invalid @enderror" type="text" placeholder="PROMOCODE" value="{{session()->has('data')? session('data')->get('promo_code') : ''}}" id="discount" name="promo_code" value="{{old('promo_code')}}">
-                        <button type="submit" class="btn text-primary shadow-0 p-0"><small class="dis">Apply Promo</small></button>
-                        {{-- <button type="submit" style="border:none; background:white; color:blue; font-size:12px">Apply Promo</button> --}}
-                    </div>
-                </div> 
-            </form>
+            <div class="box-2"> 
+                <div class="box-inner-2">
+                    <div> 
+                        <p class="fw-bold">Payment Details</p> 
+                        <p class="dis mb-3">Complete your purchase by providing your payment details</p> 
+                    </div> 
+                    <p class="dis fw-bold mb-2">Discount Code</p> 
+                    <input class="form-control text-uppercase @error('promo_code') is-invalid @enderror" type="text" value="{{$promo}}" id="discount" name="promo_code" readonly>
+                    <a href="{{route('browse-promo', $lesson->id)}}" style="text-decoration:none;"><small class="dis">Browse Promo</small></a>
+                </div>
+            </div> 
         
-            <form action="{{ route('validate-payment', $lesson->id) }}" method="post">
+            <form action="{{route('validate-payment', $lesson->id)}}" method="post">
                 @csrf
+                <input type="hidden" name="total_price" id="total_price" value="{{$total_price}}">
                 <div class="box-2 pt-0"> 
                     <div class="box-inner-2"> 
                         
@@ -117,39 +101,38 @@
                             </div>
                         </div>
 
-                                    <div class="d-flex flex-column dis"> 
-                                        <div class="d-flex align-items-center justify-content-between mb-2"> 
-                                            <p>Subtotal</p> 
-                                            <p><span class="fas"></span>{{'IDR '.number_format($lesson->unformatted_price)}}</p> 
-                                        </div> 
-                                        <div class="d-flex align-items-center justify-content-between mb-2"> 
-                                            <div class="d-flex align-items-center"> 
-                                                <p class="pe-2">Discount 
-                                                    {{-- <span class="d-inline-flex align-items-center justify-content-between bg-light px-2 couponCode"> 
-                                                        <span id="code" class="pe-2"></span> <span class="fas fa-times close"></span> 
-                                                    </span> --}}
-                                                </p> 
-                                            </div> 
-                                            <p>
-                                                <span class="fas"></span>- {{session()->has('data')? session('data')->get('discounted_price') : $discounted_price}}
-                                            </p> 
-                                        </div> 
-                                        <div class="d-flex align-items-center justify-content-between mb-2"> 
-                                            <p>Platform Fee</p> 
-                                            <p><span class="fas"></span>IDR 3,000</p> 
-                                        </div> 
-                                        <div class="d-flex align-items-center justify-content-between mb-2"> 
-                                            <p class="fw-bold">Total</p> 
-                                            <p class="fw-bold"><span class="fas"></span>{{session()->has('data')? session('data')->get('total_price') : 'IDR '.number_format($total_price)}}</p> 
-                                        </div> 
-                                        <button type="submit" style="text-decoration: none; border:none; background-color:white">
-                                            <div class="btn btn-primary mt-2">
-                                                Pay
-                                                <span class="fas px-1"></span>{{session()->has('data')? session('data')->get('total_price') : 'IDR '.number_format($total_price)}}
-                                            </div> 
-                                        </button>
-                                    </div> 
+                        <div class="d-flex flex-column dis"> 
+                            <div class="d-flex align-items-center justify-content-between mb-2"> 
+                                <p>Subtotal</p> 
+                                <p><span class="fas"></span>{{'IDR '.number_format($lesson->unformatted_price)}}</p> 
                             </div> 
+                            <div class="d-flex align-items-center justify-content-between mb-2"> 
+                                <div class="d-flex align-items-center"> 
+                                    <p class="pe-2">Discount 
+                                        {{-- <span class="d-inline-flex align-items-center justify-content-between bg-light px-2 couponCode"> 
+                                            <span id="code" class="pe-2"></span> <span class="fas fa-times close"></span> 
+                                        </span> --}}
+                                    </p> 
+                                </div> 
+                                <p>
+                                    <span class="fas"></span>- {{'IDR '.number_format($discounted_price)}}
+                                </p> 
+                            </div> 
+                            <div class="d-flex align-items-center justify-content-between mb-2"> 
+                                <p>Platform Fee</p> 
+                                <p><span class="fas"></span>IDR 3,000</p> 
+                            </div> 
+                            <div class="d-flex align-items-center justify-content-between mb-2"> 
+                                <p class="fw-bold">Total</p> 
+                                <p"><span class="fas"><strong>{{'IDR '.number_format($total_price)}}</strong></span></p> 
+                            </div>
+                            <button type="submit" style="text-decoration: none; border:none; background-color:white">
+                                <div class="btn btn-primary mt-2">
+                                    Pay
+                                    <span class="fas px-1"></span>{{'IDR '.number_format($total_price)}}
+                                </div> 
+                            </button>
+                        </div> 
                     </div> 
                 </div>
             </form>

@@ -3,31 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use App\Models\Payment;
 use App\Models\Promo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function viewPayment(Lesson $lesson)
+    public function viewPayment(Lesson $lesson, $promo = null)
     {
-        // dd($_REQUEST);
-        // dd('masuk');
-        // dd($lesson);
-        // $selected = Lesson::whereId($lesson->id)->first();
-        $discounted_price = 0;
-        $total_price = $lesson->getUnformattedPriceAttribute() + 3000;
+        if(!$promo){
+            $promo = 'PROMOCODE';
+            $discounted_price = 0;
+        }else{
+            $promo_price = Promo::where('code', $promo)->first();
+            $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_price->discount;
+        }
+        $total_price = $lesson->getUnformattedPriceAttribute() + 3000 - $discounted_price;
+        // $code = $promo->code;
         return view('trainee.payment.payment', [
             'lesson' => $lesson,
             'promos' => Promo::where('lesson_id', $lesson->id)
                 ->orWhere('apply_all', 1)->get(),
             'discounted_price' => $discounted_price,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'promo' => $promo
         ]);
     }
 
-    public function validatePayment(Lesson $lesson, Request $req)
+    public function validatePayment(Request $req, Lesson $lesson)
     {
-
         $validateInput = $req->validate([
             'email' => 'required|email',
             'card_details' => 'required|regex:#^\d{16}$#',
@@ -36,13 +41,16 @@ class PaymentController extends Controller
             'name' => 'required|alpha',
         ]);
 
-        //save tke table payments
+        
+        $payment = new Payment();
+        $payment->lesson_id = $lesson->id;
+        $payment->user_id = Auth::guard('user')->user()->id;
+        $payment->payment_method = 'Card';
+        // dd($req->total_price);
+        $payment->amount = $req->total_price;
+        $payment->save();
 
         return view('trainee.payment.qr_verify');
-
-
-        // $discounted_price = $lesson->price * $this->discount($req->promo_code);
-        // $total_price = $lesson->unformatted_price - $discounted_price + 3000;
 
     }
 
@@ -115,5 +123,17 @@ class PaymentController extends Controller
     public function verifyLoading()
     {
         return view('trainee.payment.qr_verify');
+    }
+
+    public function viewPromo($id){
+        $self_promo = Promo::where('lesson_id', $id)->get();
+        $all_promo = Promo::where('apply_all', '=', 1)->get();
+        $lesson = Lesson::where('id', $id)->first();
+        $promos = $self_promo->merge($all_promo);
+
+        return view('trainee.payment.available_promo', [
+            'promos' => $promos,
+            'lesson' => $lesson
+        ]);
     }
 }

@@ -20,7 +20,7 @@ class CreatePromosTable extends Migration
             $table->float('discount', 5, 4);
             $table->date('end_date');
             $table->string('image');
-            $table->boolean('apply_all');
+            $table->boolean('apply_all')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

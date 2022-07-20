@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Promo;
 use App\Models\Timetable;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,5 +25,20 @@ class DashboardController extends Controller
                 'promos' => Promo::checkValidDate()->get()
             ]);
         }        
+    }
+
+    public function profile($id){
+        if(auth()->guard('course')->check()){
+            $user = Course::where('id', $id)->first();
+            // dd($user);
+            return view('profile', [
+                'user' => $user
+            ]);
+        } else{
+            $user = User::where('id', $id)->first();
+            return view('profile', [
+                'user' => $user
+            ]);
+        }
     }
 }
