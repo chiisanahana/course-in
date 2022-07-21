@@ -28,11 +28,15 @@ class DashboardController extends Controller
             return view('course.dashboard');
         } else {
             // else nya sudah pasti trainee dan bukan guest karena sudah ada auth sebelumnya
-            $schedules = Schedule::join('lessons', 'lessons.id', '=', 'schedules.lesson_id')
-                ->join('timetables', 'timetables.lesson_id', '=', 'lessons.id')
-                ->availableSchedule(auth()->guard('user')->user()->id);
+            $schedules = Schedule::join('payments', 'payments.lesson_id', '=', 'schedules.lesson_id')
+                ->join('timetables', 'timetables.lesson_id', '=', 'schedules.lesson_id')
+                ->where('payments.user_id', auth()->guard('user')->user()->id);
             return view('trainee.dashboard', [
-                'timetables' => $schedules->orderBy('date')->orderBy('start_lesson')->take(3)->get(),
+                'timetables' => $schedules->whereMonth('date', date('m'))
+                    ->where('date', '>', Carbon::yesterday())
+                    ->orderBy('date')
+                    ->orderBy('start_lesson')
+                    ->take(3)->get(),
                 'promos' => Promo::checkValidDate()->get()
             ]);
         }

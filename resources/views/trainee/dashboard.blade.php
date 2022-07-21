@@ -14,7 +14,7 @@
             @foreach ($timetables as $timetable)
                 <div class="col">
                     <a href="{{ route('lessons.show', $timetable->lesson->id) }}" class="text-decoration-none">
-                        <div class="card h-100 text-white border-0">
+                        <div class="card img-overlay h-100 text-white border-0">
                             <img src="/storage/{{ $timetable->lesson->image }}" class="card-img"
                                 alt="{{ $timetable->lesson->lesson_name }}">
                             <div class="card-img-overlay d-flex flex-column justify-content-center overlay-dark">

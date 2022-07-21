@@ -23,21 +23,6 @@
                                 <p class="card-text text-warning fw-bold">
                                     <i class="bi bi-star-fill"></i> {{ $lesson->rating }}
                                 </p>
-                                {{-- <div class="d-flex mt-3 mb-2"> --}}
-                                    {{-- Button untuk edit lesson --}}
-                                    {{-- <a href="{{ route('lessons.edit', $lesson->id) }}" type="button"
-                                        class="btn btn-info me-2">
-                                        <i class="bi bi-pencil-fill"></i> --}}
-                                    {{-- </a> --}}
-                                    {{-- Button untuk delete lesson --}}
-                                    {{-- <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                    </form> --}}
-                                {{-- </div> --}}
                             </div>
                         </div>
                     </a>
