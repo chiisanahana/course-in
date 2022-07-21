@@ -11,7 +11,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center" href="#">
+                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('lessons.trainee') ? 'text-light active' : '' }}" 
+                    href="{{ route('lessons.trainee') }}">
                         <i class="bi bi-list-stars h4 m-0"></i>
                         <span class="menu ps-3">Courses</span>
                     </a>
@@ -24,7 +25,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center" href="#">
+                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('payment-history') ? 'text-light active' : '' }}"
+                    href="{{ route('payment-history') }}"
+                    href="">
                         <i class="bi bi-credit-card h4 m-0"></i>
                         <span class="menu ps-3">Payment</span>
                     </a>

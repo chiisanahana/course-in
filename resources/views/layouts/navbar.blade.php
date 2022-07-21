@@ -41,9 +41,14 @@
                 {{-- Pengecekan untuk course --}}
                 <ul class="col-md-3 navbar-nav gap-3">
                     <div class="my-auto">
-                        <a href="{{ route('view-profile',auth()->guard('course')->user()->id) }}">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
+                        <a href="{{ route('view-profile', auth()->guard('course')->user()->id) }}">
+                            @if(auth()->guard('course')->user()->prof_picture)
+                                <img src="{{ asset('/storage/' . auth()->guard('course')->user()->prof_picture) }}"
                                 class="rounded-circle" alt="Profile" width="40">
+                            @else
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
+                                class="rounded-circle" alt="Profile" width="40">
+                            @endif
                         </a>
                     </div>
                     <div class="d-flex flex-column justify-content-center">

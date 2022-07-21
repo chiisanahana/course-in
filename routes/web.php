@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 // Bisa diakses semua user
 Route::get('/courses-in-demand', [LandingPageController::class, 'list_course_in_demand']);
 Route::get('/lessons/search', [LessonController::class, 'search'])->name('lessons.search');
+Route::get('/courses', [LessonController::class, 'traineeCourses'])->name('lessons.trainee');
 Route::resource('lessons', LessonController::class);
 Route::resource('categories', CategoryController::class);
 // temporary{{  }}{{  }}
@@ -54,19 +55,21 @@ Route::middleware([VerifyLogin::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/{id}', [DashboardController::class, 'profile'])->name('view-profile');
     Route::post('/profile', [ProfileController::class, 'profile'])->name('update-profile');
+    Route::get('/payment-history', [PaymentController::class, 'paymentHistory'])->name('payment-history');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::post('/wishlist/{lesson}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     Route::get('/schedules/show/{date}', [ScheduleController::class, 'show'])->name('schedules.show');
     Route::resource('schedules', ScheduleController::class)->except(['show']);
-    Route::resource('timetables', TimetableController::class);
+    Route::get('/timetables', [TimetableController::class, 'index'])->name('timetables.index');
     Route::get('/payment/{lesson:id}/{promo:id?}', [PaymentController::class, 'viewPayment'])->name('view-payment');
-    Route::get('/promo/{lesson:id}', [PaymentController::class, 'viewPromo'])->name('browse-promo');
+    Route::get('/promo/{lesson:id}/{page?}', [PaymentController::class, 'viewPromo'])->name('browse-promo');
     Route::post('/payment/{lesson:id}/{promo:id?}', [PaymentController::class, 'validatePayment'])->name('validate-payment');
-    Route::get('/qrcode', [PaymentController::class, 'qrCode'])->name('showQr');
-    Route::get('/qr-verify', [PaymentController::class, 'verifyLoading'])->name('qr_verify');
+    Route::get('/qrcode/{lesson:id}/{promo:id?}', [PaymentController::class, 'qrPayment'])->name('qr-payment');
+    Route::post('/qrcode/{lesson:id}/{promo:id?}', [PaymentController::class, 'validateQr'])->name('validate-qr');
+    Route::get('/loading-payment', [PaymentController::class, 'loadingPayment'])->name('qr-verify');
     Route::get('/available-promo/{lesson}', [PaymentController::class, 'availablePromo']);
-    Route::post('/validate-promo/{lesson}', [PaymentController::class, 'validatePromo'])->name('validate-promo');
+    // Route::post('/validate-promo/{lesson}', [PaymentController::class, 'validatePromo'])->name('validate-promo');
     Route::resource('promos', PromoControler::class);
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });

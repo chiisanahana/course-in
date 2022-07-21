@@ -18,6 +18,7 @@ class CreateCoursesTable extends Migration
             $table->integer('role_id')->default(1);
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('prof_picture')->nullable();
             $table->string('password');
             $table->string('wa_number');
             $table->longText('address');

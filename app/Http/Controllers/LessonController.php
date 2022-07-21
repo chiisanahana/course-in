@@ -18,8 +18,18 @@ class LessonController extends Controller
      */
     public function index()
     {
-        return view('lessons.index', [
+        return view('lessons.index_course', [
             'lessons' => Lesson::where('course_id', auth()->guard('course')->user()->id)->get()
+        ]);
+    }
+
+    public function traineeCourses()
+    {
+        return view('lessons.index_trainee', [
+            'lessons' => Lesson::join('payments', 'lesson_id', '=', 'lessons.id')
+                ->where('user_id', auth()->guard('user')->user()->id)
+                ->whereBetween('payments.created_at', [now()->startOfMonth(), now()->endOfMonth()])
+                ->get()
         ]);
     }
 

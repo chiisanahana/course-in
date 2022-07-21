@@ -16,11 +16,10 @@ class DashboardController extends Controller
             return view('course.dashboard');
         } else {
             // else nya sudah pasti trainee dan bukan guest karena sudah ada auth sebelumnya
+
             return view('trainee.dashboard', [
-                'timetables' => Timetable::where('user_id', '1')
-                                    ->with('schedule.lesson')
-                                    ->join('schedules', 'schedules.id', '=', 'timetables.schedule_id')
-                                    ->orderBy('schedules.date')
+                'timetables' => Timetable::where('user_id', auth()->guard('user')->user()->id)
+                                    ->join('lessons', 'lessons.id', '=', 'timetables.lesson_id')
                                     ->take(3)->get(),
                 'promos' => Promo::checkValidDate()->get()
             ]);

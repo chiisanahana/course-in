@@ -72,8 +72,8 @@
                                 <div id="payment_methods" class="accordion-collapse collapse">
                                     <div class="accordion-body px-0 pb-2">
                                         <a class="dropdown-item h5" href="{{ route('view-payment', $lesson->id) }}">
-                                            Pay by card</a>
-                                        <a class="dropdown-item h5" href="{{ route('showQr') }}">Pay by QRIS</a>
+                                            Pay by Card</a>
+                                        <a class="dropdown-item h5" href="{{ route('qr-payment', $lesson->id) }}">Pay by QRIS</a>
                                     </div>
                                 </div>
                             </div>

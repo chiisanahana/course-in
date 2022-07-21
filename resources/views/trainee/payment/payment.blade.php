@@ -70,7 +70,7 @@
                     </div> 
                     <p class="dis fw-bold mb-2">Discount Code</p> 
                     <input class="form-control text-uppercase @error('promo_code') is-invalid @enderror" type="text" value="{{$promo}}" id="discount" name="promo_code" readonly>
-                    <a href="{{route('browse-promo', $lesson->id)}}" style="text-decoration:none;"><small class="dis">Browse Promo</small></a>
+                    <a href="{{route('browse-promo', [$lesson->id, 1])}}" style="text-decoration:none;"><small class="dis">Browse Promo</small></a>
                 </div>
             </div> 
         

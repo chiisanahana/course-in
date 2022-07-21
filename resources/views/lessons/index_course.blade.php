@@ -14,8 +14,7 @@
                 <div class="col">
                     <a href="{{ route('lessons.show', $lesson->id) }}" class="text-decoration-none text-dark">
                         <div class="card h-100 lesson-card">
-                            <img src="/storage/{{ $lesson->image }}" class="card-img-top"
-                                alt="{{ $lesson->lesson_name }}">
+                            <img src="/storage/{{ $lesson->image }}" class="card-img-top" alt="{{ $lesson->lesson_name }}">
                             <div class="card-body pb-1">
                                 <h5 class="card-title mb-0">{{ $lesson->lesson_name }}</h5>
                                 <small class="card-text text-muted">{{ $lesson->course->course_name }}</small>
@@ -26,7 +25,8 @@
                                 </p>
                                 <div class="d-flex mt-3 mb-2">
                                     {{-- Button untuk edit lesson --}}
-                                    <a href="{{ route('lessons.edit', $lesson->id) }}" type="button" class="btn btn-info me-2">
+                                    <a href="{{ route('lessons.edit', $lesson->id) }}" type="button"
+                                        class="btn btn-info me-2">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                     {{-- Button untuk delete lesson --}}

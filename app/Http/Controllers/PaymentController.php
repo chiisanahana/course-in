@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Models\Payment;
 use App\Models\Promo;
+use App\Models\Timetable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +21,8 @@ class PaymentController extends Controller
             $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_price->discount;
         }
         $total_price = $lesson->getUnformattedPriceAttribute() + 3000 - $discounted_price;
-        // $code = $promo->code;
         return view('trainee.payment.payment', [
             'lesson' => $lesson,
-            'promos' => Promo::where('lesson_id', $lesson->id)
-                ->orWhere('apply_all', 1)->get(),
             'discounted_price' => $discounted_price,
             'total_price' => $total_price,
             'promo' => $promo
@@ -46,94 +44,80 @@ class PaymentController extends Controller
         $payment->lesson_id = $lesson->id;
         $payment->user_id = Auth::guard('user')->user()->id;
         $payment->payment_method = 'Card';
-        // dd($req->total_price);
         $payment->amount = $req->total_price;
         $payment->save();
 
-        return view('trainee.payment.qr_verify');
+        // Instantiate timetable setelah payment berhasil
+        Timetable::create([
+            'user_id' => Auth::guard('user')->user()->id,
+            'lesson_id' => $lesson->id
+        ]);
+
+        return view('trainee.payment.qr_loading');
 
     }
 
-    public function applyPromo(Request $req, Lesson $lesson)
-    {
-        $promo_code = $this->validatePromoCode($req->promo_code);
-        $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_code;
-        $total_price = $lesson->getUnformattedPriceAttribute() + 3000 - $discounted_price;
+    public function validateQr(Request $req, Lesson $lesson){
+        $payment = new Payment();
+        $payment->lesson_id = $lesson->id;
+        $payment->user_id = Auth::guard('user')->user()->id;
+        $payment->payment_method = 'QRIS';
+        $payment->amount = $req->total_price;
+        $payment->save();
 
-        return view('trainee.payment.payment_discount', [
+        // Instantiate timetable setelah payment berhasil
+        Timetable::create([
+            'user_id' => Auth::guard('user')->user()->id,
+            'lesson_id' => $lesson->id
+        ]);
+
+        return view('trainee.payment.qr_loading');
+    }
+
+    public function qrPayment($id, $promo=null)
+    {
+        $lesson = Lesson::where('id', $id)->first();
+        if(!$promo){
+            $promo = 'PROMOCODE';
+            $discounted_price = 0;
+        }else{
+            $promo_price = Promo::where('code', $promo)->first();
+            $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_price->discount;
+        }
+        $total_price = $lesson->getUnformattedPriceAttribute() + 3000 - $discounted_price;
+        return view('trainee.payment.qr_code', [
             'lesson' => $lesson,
             'discounted_price' => $discounted_price,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'promo' => $promo
         ]);
     }
 
-    public function validatePromoCode($promo_code)
+    public function loadingPayment()
     {
-        if (!$promo_code) return 0;
-        $exists = Promo::where('code', $promo_code)->first();
-        if ($exists) return $exists->discount;
-        else return 0;
+        return view('trainee.payment.qr_loading');
     }
 
-    public function discount($promo_code)
-    {
-        $discount = Promo::where('code', $promo_code)->first();
-        if ($discount) return $discount->discount;
-        else return 0;
-    }
-
-    public function availablePromo(Lesson $lesson)
-    {
-        return view('trainee.payment.available_promo', [
-            'promos' => Promo::where('lesson_id', $lesson->id)
-                ->orWhere('apply_all', 1)->get()
-        ]);
-    }
-    public function validatePromo(Request $request, Lesson $lesson)
-    {
-        // $lesson = Lesson::whereId($request->lesson_id)->first();
-        $discount = $this->validatePromoCode($request->promo_code);
-        // $promo = Promo::where('lesson_id', $lesson->id)
-        //                 ->orWhere('apply_all', 1)->first();
-        $promo_code = $request->promo_code;
-        // $discounted_price = 'IDR '.number_format($lesson->unformatted_price * $discount);
-        $total_price = 'IDR ' . number_format($lesson->unformatted_price + 3000 - ($lesson->unformatted_price * $discount));
-        // $data = collect([$lesson, $promo_code, $discounted_price, $total_price]);
-        $data = collect([
-            'lesson' => $lesson,
-            'promo_code' => $request->promo_code,
-            'discounted_price' => 'IDR ' . number_format($lesson->unformatted_price * $discount),
-            'total_price' => $total_price
-        ]);
-
-        return redirect()->route('view-payment', $lesson->id)->with('data', $data);
-        // return view('payment', [
-        //     'lesson' => $lesson,
-        //     'promo_code' => $request->promo_code,
-        //     'discounted_price' => 'IDR '.number_format($lesson->unformatted_price * $discount),
-        //     'total_price' => 'IDR '.number_format($total_price)
-        // ]);
-    }
-
-    public function qrCode()
-    {
-        return view('trainee.payment.qr_code');
-    }
-
-    public function verifyLoading()
-    {
-        return view('trainee.payment.qr_verify');
-    }
-
-    public function viewPromo($id){
+    public function viewPromo($id, $page){
         $self_promo = Promo::where('lesson_id', $id)->get();
         $all_promo = Promo::where('apply_all', '=', 1)->get();
         $lesson = Lesson::where('id', $id)->first();
         $promos = $self_promo->merge($all_promo);
 
-        return view('trainee.payment.available_promo', [
-            'promos' => $promos,
-            'lesson' => $lesson
-        ]);
+        if($page==1){
+            return view('trainee.payment.available_promo_card', [
+                'promos' => $promos,
+                'lesson' => $lesson
+            ]);
+        }else{
+            return view('trainee.payment.available_promo_qr', [
+                'promos' => $promos,
+                'lesson' => $lesson
+            ]);
+        }
+    }
+
+    public function paymentHistory(){
+        return view('trainee.payment_history');
     }
 }

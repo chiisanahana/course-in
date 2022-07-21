@@ -16,7 +16,7 @@ class CreateTimetablesTable extends Migration
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('schedule_id')->constrained();
+            $table->foreignId('lesson_id')->constrained();
             $table->timestamps();
         });
     }
