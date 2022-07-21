@@ -64,6 +64,11 @@ class Lesson extends Model
         return $this->hasMany(Schedule::class);
     }
 
+    public function timetables()
+    {
+        return $this->hasMany(Timetable::class);
+    }
+
     public function promos()
     {
         return $this->hasMany(Promo::class);

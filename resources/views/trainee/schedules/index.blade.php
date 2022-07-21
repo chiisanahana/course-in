@@ -38,8 +38,9 @@
                                         <div class="d-flex gap-3">
                                             {{ $schedule->lesson->lesson_name }}
                                             <div class="vr"></div>
-                                            {{ $schedule->schedule_time }}
-                                            <span class="badge bg-primary rounded-pill ms-auto my-auto px-2">{{ $schedule->lesson->type }}</span>
+                                            {{ $schedule->lesson->lesson_name }}
+                                            <span
+                                                class="badge bg-primary rounded-pill ms-auto my-auto px-2">{{ $schedule->type }}</span>
                                         </div>
                                         <small class="text-muted">{{ $schedule->lesson->course->name }}</small>
                                     </li>

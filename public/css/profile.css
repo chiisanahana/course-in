@@ -6,14 +6,15 @@ body {
     text-align: center;
 }
 .profile-img img{
-    width: 70%;
-    height: 100%;
+    width: 13vw;
+    height: 13vw;
+    object-fit: cover;
 }
 .profile-img .file {
     position: relative;
     overflow: hidden;
-    margin-top: -37%;
-    margin-right: 30%;
+    margin-top: -22%;
+    margin-right: 40%;
     width: auto;
     border: none;
     border-radius: 0;

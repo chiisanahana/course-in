@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\Payment;
 use App\Models\Promo;
+use App\Models\Schedule;
 use App\Models\Timetable;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,27 +17,36 @@ class DashboardController extends Controller
     public function index()
     {
         if (auth()->guard('course')->check()) {
+            // ambil transaksi 30 hari terakhir dari payment
+            $date = Carbon::now()->subMonth();
+            $payment = Payment::where('created_at', '>=', $date)->get();
+            // dd($payment);
+
+            // ambil lesson dari payment 30 hari terakhir
+            $lesson = Lesson::where('course_id', auth()->guard('course')->user()->id)->pluck('id')->toArray();
+            $revenue = Payment::whereIn('lesson_id', $lesson)->where('created_at', '>=', $date)->sum('amount');
             return view('course.dashboard');
         } else {
             // else nya sudah pasti trainee dan bukan guest karena sudah ada auth sebelumnya
-
+            $schedules = Schedule::join('lessons', 'lessons.id', '=', 'schedules.lesson_id')
+                ->join('timetables', 'timetables.lesson_id', '=', 'lessons.id')
+                ->availableSchedule(auth()->guard('user')->user()->id);
             return view('trainee.dashboard', [
-                'timetables' => Timetable::where('user_id', auth()->guard('user')->user()->id)
-                                    ->join('lessons', 'lessons.id', '=', 'timetables.lesson_id')
-                                    ->take(3)->get(),
+                'timetables' => $schedules->orderBy('date')->orderBy('start_lesson')->take(3)->get(),
                 'promos' => Promo::checkValidDate()->get()
             ]);
-        }        
+        }
     }
 
-    public function profile($id){
-        if(auth()->guard('course')->check()){
+    public function profile($id)
+    {
+        if (auth()->guard('course')->check()) {
             $user = Course::where('id', $id)->first();
             // dd($user);
             return view('profile', [
                 'user' => $user
             ]);
-        } else{
+        } else {
             $user = User::where('id', $id)->first();
             return view('profile', [
                 'user' => $user

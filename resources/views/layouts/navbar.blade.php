@@ -41,13 +41,15 @@
                 {{-- Pengecekan untuk course --}}
                 <ul class="col-md-3 navbar-nav gap-3">
                     <div class="my-auto">
-                        <a href="{{ route('view-profile', auth()->guard('course')->user()->id) }}">
-                            @if(auth()->guard('course')->user()->prof_picture)
-                                <img src="{{ asset('/storage/' . auth()->guard('course')->user()->prof_picture) }}"
-                                class="rounded-circle" alt="Profile" width="40">
+                        <a href="{{ route('view-profile',auth()->guard('course')->user()->id) }}">
+                            @if (auth()->guard('course')->user()->prof_picture)
+                                <img src="{{ asset('/storage/' .auth()->guard('course')->user()->prof_picture) }}"
+                                    class="rounded-circle" alt="Profile" width="40" height="40">
                             @else
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
-                                class="rounded-circle" alt="Profile" width="40">
+                                    class="rounded-circle" alt="Profile" width="40">
+                                {{-- <img src="https://img.icons8.com/bubbles/100/000000/user.png"
+                                class="img-radius" alt="User-Profile-Image" width="40">> --}}
                             @endif
                         </a>
                     </div>
@@ -67,7 +69,7 @@
                     <div>
                         <a href="{{ route('view-profile',auth()->guard('user')->user()->id) }}">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
-                                class="rounded-circle" alt="Profile" width="40">
+                                class="rounded-circle" alt="Profile" width="40" height="40">
                         </a>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
@@ -84,8 +86,7 @@
             @else
                 <ul class="navbar-nav mb-2 mb-lg-0 gap-3 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-secondary text-dark px-3 py-1"
-                            href="{{ route('login') }}">Login</a>
+                        <a class="nav-link btn btn-secondary text-dark px-3 py-1" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-secondary text-dark px-3 py-1"

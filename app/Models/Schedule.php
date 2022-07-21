@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,13 +57,15 @@ class Schedule extends Model
         }
     }
 
+    public function scopeAvailableSchedule($query, $user_id)
+    {
+        $paymentDate = Carbon::create(Payment::where('user_id', $user_id)->first()->created_at->toDateString());
+        return $query->where('user_id', $user_id)
+            ->whereBetween('date', [$paymentDate->toDateString(), $paymentDate->addMonth()->toDateString()]);
+    }
+
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
-    }
-
-    public function timetables()
-    {
-        return $this->hasMany(Timetable::class);
     }
 }

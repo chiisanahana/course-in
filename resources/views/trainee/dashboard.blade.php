@@ -13,21 +13,20 @@
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
             @foreach ($timetables as $timetable)
                 <div class="col">
-                    <a href="{{ route('lessons.show', $timetable->schedule->lesson->id) }}" class="text-decoration-none">
+                    <a href="{{ route('lessons.show', $timetable->lesson->id) }}" class="text-decoration-none">
                         <div class="card h-100 text-white border-0">
-                            <img src="/storage/{{ $timetable->schedule->lesson->image }}" class="card-img"
-                                alt="{{ $timetable->schedule->lesson->lesson_name }}">
+                            <img src="/storage/{{ $timetable->lesson->image }}" class="card-img"
+                                alt="{{ $timetable->lesson->lesson_name }}">
                             <div class="card-img-overlay d-flex flex-column justify-content-center overlay-dark">
-                                <h4 class="card-title">{{ $timetable->schedule->lesson->lesson_name }}</h4>
-                                <p class="card-text mb-0">{{ $timetable->schedule->date }}</p>
-                                <p class="card-text">{{ $timetable->schedule->schedule_time }}</p>
+                                <h4 class="card-title">{{ $timetable->lesson->lesson_name }}</h4>
+                                <p class="card-text mb-0">{{ $timetable->date }}</p>
+                                <p class="card-text">{{ $timetable->schedule_time }}</p>
                             </div>
                         </div>
                     </a>
                 </div>
             @endforeach
         </div>
-        <p class="text-end"><a href="" class="text-decoration-none">View More</a></p>
     @else
         {{-- Kalau kosong, tampilkan pesan --}}
         <div class="d-flex flex-column gap-3 mt-5">

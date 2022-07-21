@@ -55,6 +55,8 @@ Route::middleware([VerifyLogin::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/{id}', [DashboardController::class, 'profile'])->name('view-profile');
     Route::post('/profile', [ProfileController::class, 'profile'])->name('update-profile');
+    Route::post('/addLibur', [ProfileController::class, 'add_libur'])->name('add-libur');
+    Route::post('/removeLibur', [ProfileController::class, 'remove_libur'])->name('remove-libur');
     Route::get('/payment-history', [PaymentController::class, 'paymentHistory'])->name('payment-history');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
