@@ -118,6 +118,14 @@ class PaymentController extends Controller
     }
 
     public function paymentHistory(){
-        return view('trainee.payment_history');
+        $payments = Payment::where('user_id', Auth::guard('user')->user()->id)->get();
+        $total = 0;
+        foreach($payments as $payment){
+            $total += $payment->amount;
+        }
+        return view('trainee.payment_history', [
+            'payments' => $payments,
+            'total' => $total
+        ]);
     }
 }

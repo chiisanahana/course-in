@@ -78,4 +78,8 @@ class Lesson extends Model
     {
         return $this->hasMany(WishlistItem::class);
     }
+
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
 }

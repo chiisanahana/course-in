@@ -137,7 +137,7 @@
                                                                 role="switch" name="checkbox" id="day_off"
                                                                 {{ $user->active == 0 ? 'checked' : '' }}>
                                                             <label class="form-check-label"
-                                                                for="day_off">LIBORRRR</label>
+                                                                for="day_off">Set break off mode</label>
                                                         </div>
                                                     @endif
                                                 </div>

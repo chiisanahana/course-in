@@ -10,9 +10,8 @@
             <div class="card h-100">
                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                 <div class="card-body">
-                    <h5 class="card-title text-center"><strong>Total Revenue</strong></h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <h1 class="card-title text-center my-4"><strong>{{$revenue}}</strong></h1>
+                    <h3 class="card-title text-center">Total Revenue</h3>
                 </div>
             </div>
         </div>
@@ -20,8 +19,8 @@
             <div class="card h-100">
                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                 <div class="card-body">
-                    <h5 class="card-title text-center"><strong>Total Trainee</strong></h5>
-                    <p class="card-text">This is a short card.</p>
+                    <h1 class="card-title text-center  my-4"><strong>{{$countTrainee}}</strong></h1>
+                    <h3 class="card-title text-center">Total Trainee</h3>
                 </div>
             </div>
         </div>
@@ -29,9 +28,8 @@
             <div class="card h-100">
                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                 <div class="card-body">
-                    <h5 class="card-title text-center"><strong>Total Course</strong></h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content.</p>
+                    <h1 class="card-title text-center  my-4"><strong>{{$countCourse}}</strong></h1>
+                    <h3 class="card-title text-center">Total Course</h3>
                 </div>
             </div>
         </div>

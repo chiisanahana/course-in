@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoControler;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\WishlistController;
@@ -71,6 +72,7 @@ Route::middleware([VerifyLogin::class])->group(function () {
     Route::post('/qrcode/{lesson:id}/{promo:id?}', [PaymentController::class, 'validateQr'])->name('validate-qr');
     Route::get('/loading-payment', [PaymentController::class, 'loadingPayment'])->name('qr-verify');
     Route::get('/available-promo/{lesson}', [PaymentController::class, 'availablePromo']);
+    Route::get('/revenue', [RevenueController::class, 'view_revenue'])->name('view-revenue');
     // Route::post('/validate-promo/{lesson}', [PaymentController::class, 'validatePromo'])->name('validate-promo');
     Route::resource('promos', PromoControler::class);
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
