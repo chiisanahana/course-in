@@ -24,7 +24,7 @@
             <div class="card h-100 shadow text-white">
                 <div class="card-body rounded d-flex flex-column justify-content-center" style="font-size: 11pt; background-color: #3d796f;">
                     <h5 class="card-title"><strong>Details :</strong></h5>
-                    <h1 class="text-start align-items-center my-0">{{$countCourse}} Course(s)</h1>
+                    <h1 class="text-start align-items-center my-0">{{$countCourse}} Lesson(s)</h1>
                     <h1 class="text-start align-items-center my-0">{{$countTrainee}} Trainee(s)</h1>
                 </div>
             </div>
