@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class RevenueController extends Controller
 {
+    // Revenue buat course
     public function view_revenue()
     {
         if (auth()->guard('course')->check()) {
@@ -28,4 +29,13 @@ class RevenueController extends Controller
             ]);
         }
     }
+
+    // Payment transaction buat admin
+    public function viewTransaction()
+    {
+        return view('admin.view_transaction', [
+            'payments' => Payment::all()
+        ]);
+    }
+
 }

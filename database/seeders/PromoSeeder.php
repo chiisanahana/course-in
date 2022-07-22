@@ -24,7 +24,7 @@ class PromoSeeder extends Seeder
         ]);
 
         Promo::create([
-            'lesson_id' => '6',
+            'lesson_id' => '8',
             'code' => 'ORUMYOGA',
             'discount' => 0.2,
             'end_date' => '2022-08-14',

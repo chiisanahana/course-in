@@ -16,16 +16,17 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
             @foreach ($lessons as $lesson)
                 <div class="col">
-                    <div class="card h-100 lesson-card">
-                        <img src="/storage/{{ $lesson->image }}"
-                            class="card-img-top" alt="{{ $lesson->lesson_name }}">
-                        <div class="card-body">
-                            <h5 class="card-title mb-0">{{ $lesson->lesson_name }}</h5>
-                            <small class="card-text text-muted">{{ $lesson->course->course_name }}</small>
-                            <p class="card-text my-2F">{!! $lesson->price !!}</p>
-                            <small class="card-text">{{ $lesson->course->address }}</small>
+                    <a href="{{ route('lessons.show', $lesson->id) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 lesson-card">
+                            <img src="/storage/{{ $lesson->image }}" class="card-img-top" alt="{{ $lesson->lesson_name }}">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">{{ $lesson->lesson_name }}</h5>
+                                <small class="card-text text-muted">{{ $lesson->course->course_name }}</small>
+                                <p class="card-text my-2F">{!! $lesson->price !!}</p>
+                                <small class="card-text">{{ $lesson->course->address }}</small>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>

@@ -74,7 +74,11 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="m-0 text-light">{{ Str::words(auth()->guard('user')->user()->name,1,'') }}</h6>
-                        <small class="text-light">Trainee</small>
+                        @if (auth()->guard('user')->user()->role_id == 2)
+                            <small class="text-light">Trainee</small>
+                        @else
+                            <small class="text-light">Admin</small>
+                        @endif
                     </div>
                     <li class="nav-item ms-auto">
                         <a class="nav-link h3 m-0" href="{{ route('logout') }}">

@@ -56,27 +56,23 @@
                     <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-outline-primary col-5 fs-5 py-1">
                         Edit lesson
                     </a>
-                {{-- Untuk trainee atau guest --}}
+                    {{-- Untuk trainee atau guest --}}
                 @elseif (!auth()->guard('course')->check())
                     @if ($schedules->count())
                         {{-- Button untuk booking, dengan payment method --}}
-                        <div class="accordion col-5" id="paymentMethod">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button
-                                        class="accordion-button justify-content-center bg-primary text-light fw-bold fs-5 rounded py-2"
-                                        type="button" data-bs-toggle="collapse" data-bs-target="#payment_methods">
-                                        I'M IN!
-                                    </button>
-                                </h2>
-                                <div id="payment_methods" class="accordion-collapse collapse">
-                                    <div class="accordion-body px-0 pb-2">
-                                        <a class="dropdown-item h5" href="{{ route('view-payment', $lesson->id) }}">
-                                            Pay by Card</a>
-                                        <a class="dropdown-item h5" href="{{ route('qr-payment', $lesson->id) }}">Pay by QRIS</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="payment_methods" class="btn-group dropup col-5">
+                            <button type="button" class="btn btn-primary dropdown-toggle fw-bold fs-5 py-0"
+                                data-bs-toggle="dropdown">
+                                I'M IN
+                            </button>
+                            <ul class="dropdown-menu bg-secondary w-100 shadow">
+                                <li><a class="dropdown-item h5" href="{{ route('view-payment', $lesson->id) }}">
+                                        Pay by Card</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">/li>
+                                <li><a class="dropdown-item h5" href="{{ route('qr-payment', $lesson->id) }}">Pay by
+                                        QRIS</a></li>
+                            </ul>
                         </div>
                     @else
                         <button class="btn btn-primary col-5 fs-5 py-1" disabled>I'M IN!</button>
@@ -110,6 +106,5 @@
         <div class="container px-2">
             <img src="/storage/{{ $lesson->image }}" class="rounded float-end d-block w-100" alt="lesson_image">
         </div>
-
     </div>
 @endsection

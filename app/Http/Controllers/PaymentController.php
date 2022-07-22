@@ -13,10 +13,10 @@ class PaymentController extends Controller
 {
     public function viewPayment(Lesson $lesson, $promo = null)
     {
-        if(!$promo){
+        if (!$promo) {
             $promo = 'PROMOCODE';
             $discounted_price = 0;
-        }else{
+        } else {
             $promo_price = Promo::where('code', $promo)->first();
             $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_price->discount;
         }
@@ -39,16 +39,17 @@ class PaymentController extends Controller
             'name' => 'required|alpha',
         ]);
 
-        
         $payment = new Payment();
         $payment->lesson_id = $lesson->id;
         $payment->user_id = Auth::guard('user')->user()->id;
         $payment->payment_method = 'Card';
         $payment->amount = $req->total_price;
         $used_promo = Promo::where('code', $req->promo_code)->first();
-        if(!$used_promo){
+        if (!$used_promo) {
             $payment->promo_id = 0;
-        }else{
+        } else {
+            $used_promo->usedTimes += 1;
+            $used_promo->save();
             $payment->promo_id = $used_promo->id;
         }
         $payment->save();
@@ -60,19 +61,21 @@ class PaymentController extends Controller
         ]);
 
         return view('trainee.payment.qr_loading');
-
     }
 
-    public function validateQr(Request $req, Lesson $lesson){
+    public function validateQr(Request $req, Lesson $lesson)
+    {
         $payment = new Payment();
         $payment->lesson_id = $lesson->id;
         $payment->user_id = Auth::guard('user')->user()->id;
         $payment->payment_method = 'QRIS';
         $payment->amount = $req->total_price;
         $used_promo = Promo::where('code', $req->promo_code)->first();
-        if(!$used_promo){
+        if (!$used_promo) {
             $payment->promo_id = 0;
-        }else{
+        } else {
+            $used_promo->usedTimes += 1;
+            $used_promo->save();
             $payment->promo_id = $used_promo->id;
         }
         $payment->save();
@@ -86,13 +89,13 @@ class PaymentController extends Controller
         return view('trainee.payment.qr_loading');
     }
 
-    public function qrPayment($id, $promo=null)
+    public function qrPayment($id, $promo = null)
     {
         $lesson = Lesson::where('id', $id)->first();
-        if(!$promo){
+        if (!$promo) {
             $promo = 'PROMOCODE';
             $discounted_price = 0;
-        }else{
+        } else {
             $promo_price = Promo::where('code', $promo)->first();
             $discounted_price = $lesson->getUnformattedPriceAttribute() * $promo_price->discount;
         }
@@ -110,18 +113,19 @@ class PaymentController extends Controller
         return view('trainee.payment.qr_loading');
     }
 
-    public function viewPromo($id, $page){
+    public function viewPromo($id, $page)
+    {
         $self_promo = Promo::where('lesson_id', $id)->get();
         $all_promo = Promo::where('apply_all', '=', 1)->get();
         $lesson = Lesson::where('id', $id)->first();
         $promos = $self_promo->merge($all_promo);
 
-        if($page==1){
+        if ($page == 1) {
             return view('trainee.payment.available_promo_card', [
                 'promos' => $promos,
                 'lesson' => $lesson
             ]);
-        }else{
+        } else {
             return view('trainee.payment.available_promo_qr', [
                 'promos' => $promos,
                 'lesson' => $lesson
@@ -129,7 +133,8 @@ class PaymentController extends Controller
         }
     }
 
-    public function paymentHistory(){
+    public function paymentHistory()
+    {
         $payments = Payment::where('user_id', Auth::guard('user')->user()->id);
         $cardCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'Card')->count();
         $qrisCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'QRIS')->count();

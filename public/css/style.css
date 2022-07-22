@@ -14,7 +14,12 @@
 
 .img-overlay img {
     height: 100%;
+    max-height: 13vw;
     object-fit: cover;
+}
+
+#payment_methods button::after {
+    content: none;
 }
 
 #carousel img {

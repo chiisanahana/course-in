@@ -8,7 +8,7 @@
             <div class="card h-100 shadow text-white" style="background-color: #251e73;">
                 <div class="card-body rounded d-flex flex-column justify-content-center">
                     <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
-                    <h1 class="text-center align-items-center mb-3" style="font-size: 3rem">{{ 'IDR ' . number_format($total) }}</h1>
+                    <h1 class="text-center align-items-center mb-3" style="font-size: 3rem">{{ number_format($total) }}</h1>
                     <h4 class="card-title text-center"><strong>Total Earnings</strong></h4>
                 </div>
             </div>

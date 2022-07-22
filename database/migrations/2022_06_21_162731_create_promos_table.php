@@ -21,6 +21,7 @@ class CreatePromosTable extends Migration
             $table->date('end_date');
             $table->string('image');
             $table->boolean('apply_all')->default(0);
+            $table->integer('usedTimes')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

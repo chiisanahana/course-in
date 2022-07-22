@@ -5,62 +5,40 @@
 @section('content')
     <h3 class="mb-3">On Going Promo Code(s)</h3>
 
-    @if ($lessons->count())
+    @if ($promos->count())
         {{-- Kalau ada, tampilin semua --}}
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="row row-cols-1 g-4">
             @foreach ($promos as $promo)
-                <div class="col">
-                    <a href="{{ route('lessons.show', $lesson->id) }}" class="text-decoration-none text-dark">
-                        <div class="card h-100 lesson-card">
-                            {{-- Type Course atau Workshop --}}
-                            <span class="badge bg-dark position-absolute top-0 start-0">{{ $lesson->type }}</span>
-
-                            {{-- Lesson details --}}
-                            <img src="/storage/{{ $lesson->image }}" class="card-img-top" alt="{{ $lesson->lesson_name }}">
+                <div class="card ps-0 mb-2 bg-secondary">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <img src="{{ asset('storage/' . $promo->image) }}" class="img-fluid rounded-start"
+                                alt="{{ $promo->code }}">
+                        </div>
+                        <div class="col d-flex justify-content-between align-items-center pe-4">
                             <div class="card-body">
-                                <h5 class="card-title mb-0">{{ $lesson->lesson_name }}</h5>
-                                <small class="card-text text-muted">{{ $lesson->course->name }}</small>
-                                <p class="card-text my-2 text-primary">{{ $lesson->price }}</p>
-                                <small class="card-text">{{ $lesson->course->address }}</small>
+                                <h5 class="card-title fw-bold">{{ $promo->code }}</h5>
+                                <p class="h3 card-text">{{ $promo->discount * 100 }}%</p>
                             </div>
-
-                            <div class="d-flex justify-content-between align-items-center mt-auto px-3 pb-2">
-                                {{-- Button love untuk add dan remove wishlist --}}
-                                @if (!auth()->guard('user')->check() ||
-                                    !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
-                                    {{-- Kalau belum ada di wishlist atau belum login, ini tombol untuk add nya --}}
-                                    <form action="{{ route('wishlist.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                                        <button type="submit" class="btn shadow-none p-0">
-                                            <i class="bi bi-heart h4"></i>
-                                        </button>
-                                    </form>
-                                @else
-                                    {{-- Kalau sudah ada di wishlist, ini tombol untuk remove nya --}}
-                                    <form action="{{ route('wishlist.destroy', $lesson->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn shadow-none p-0">
-                                            <i class="bi bi-heart-fill h4 text-danger"></i>
-                                        </button>
-                                    </form>
-                                @endif
-
-                                {{-- Rating lesson --}}
-                                <div class="text-warning fw-bold m-0">
-                                    <i class="bi bi-star-fill"></i> {{ $lesson->rating }}
-                                </div>
+                            <div>
+                                <p class="h5 text-primary">Expires at {{ $promo->end_date }}</p>
+                                <p class="h5 text-primary">Used {{ $promo->usedTimes }} time(s)</p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             @endforeach
         </div>
     @else
         {{-- Kalau kosong, tampilkan pesan --}}
         <div class="d-flex flex-column gap-5 mt-5 p-5">
-            <h5 class="text-center text-muted">No promo is available at the momentThis category does not have lesson yet</h5>
+            <h5 class="text-center text-muted">No promo is available at the moment...</h5>
             <h1 class="text-center text-muted">(っ °Д °;)っ</h1>
         </div>
     @endif
+    <div class="fixed-bottom d-flex justify-content-end">
+        <a href="{{ route('promos.create') }}" type="button" class="btn btn-primary rounded-circle shadow px-2 py-1 m-4">
+            <i class="bi bi-plus h1"></i>
+        </a>
+    </div>
 @endsection

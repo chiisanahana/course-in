@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use App\Models\Payment;
 use App\Models\Promo;
 use Illuminate\Http\Request;
 
@@ -10,14 +11,39 @@ class PromoController extends Controller
 {
     public function index()
     {
-        return view('course.view_promos');
+        if (auth()->guard('course')->check()) {
+            $lessons = Lesson::where('course_id', auth()->guard('course')->user()->id)->get();
+            $allPromos = Promo::orderBy('end_date')->get();
+            $promos = collect();
+            foreach ($allPromos as $promo) {
+                $temp = $lessons->where('id', $promo->lesson_id)->first();
+                if ($temp || $promo->apply_all == 1) {
+                    $promos->push($promo);
+                }
+            }
+            return view('course.view_promos', [
+                'promos' => $promos
+            ]);
+        } else if (auth()->guard('user')->check() && auth()->guard('user')->user()->role_id == 1) {
+            return view('course.view_promos', [
+                'promos' => Promo::where('apply_all', 1)->orderBy('end_date')->get()
+            ]);
+        } else {
+            abort(403);
+        }
     }
 
     public function create()
     {
-        return view('promos.create', [
-            'lessons' => Lesson::where('course_id', auth()->guard('course')->user()->id)->get()
-        ]);
+        if (auth()->guard('course')->check()) {
+            return view('promos.create', [
+                'lessons' => Lesson::where('course_id', auth()->guard('course')->user()->id)->get()
+            ]);
+        } else if (auth()->guard('user')->check() && auth()->guard('user')->user()->role_id == 1) {
+            return view('promos.create');
+        } else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
@@ -30,9 +56,13 @@ class PromoController extends Controller
             'image' => 'required|file|image'
         ]);
 
+        if (auth()->guard('user')->user()->role_id == 1) {
+            $validatedData['apply_all'] = 1;
+        }
+
         $validatedData['lesson_id'] = $request->lesson;
-        $validatedData['discount'] = $request->discount/100;
-        $validatedData['image'] = $request->file('image')->store('promos', 'public'); 
+        $validatedData['discount'] = $request->discount / 100;
+        $validatedData['image'] = $request->file('image')->store('promos', 'public');
         Promo::create($validatedData);
         toast('Successfully added a promo!', 'success');
         return redirect()->route('dashboard');

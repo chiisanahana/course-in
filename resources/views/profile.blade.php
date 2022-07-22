@@ -131,13 +131,13 @@
                                             <div class="col-sm-6">
                                                 <!-- buat if untuk cek apakah libur == true, kalau true nampil teks apakah ingin memulai kembali les -->
                                                 <div class="d-flex gap-2 align-items-center">
-                                                    @if ($user->role_id == 1)
+                                                    @if (auth()->guard('course')->check())
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox"
                                                                 role="switch" name="checkbox" id="day_off"
                                                                 {{ $user->active == 0 ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                for="day_off">Set break off mode</label>
+                                                            <label class="form-check-label" for="day_off">Set break
+                                                                off mode</label>
                                                         </div>
                                                     @endif
                                                 </div>

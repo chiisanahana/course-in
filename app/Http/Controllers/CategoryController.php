@@ -5,10 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Lesson;
 use App\Models\Wishlist;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +40,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('add_categories');
+        return view('admin.add_categories');
     }
 
     /**
@@ -39,12 +51,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->validate([
-            'name' => 'required|unique:categories'
+        $validateInput = $request->validate([
+            'name' => 'required|unique:categories',
+            'image' => 'required|mimes:jpg,jpeg,svg,png,webp,avif'
         ]);
 
-        Category::create($name);
-        return redirect()->route('landing_page')
+        $category = new Category();
+        $category->name = Str::title($request->name);
+        $category->image = $request->file('image')->store('categories', 'public');
+ 
+        $category->save();
+        return redirect()->route('categories.index')
             ->with('successMsg', $request->name . ' category added successfully.');
     }
 
@@ -68,9 +85,18 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
+    public function viewUpdate()
+    {
+        return view('admin.view_category', [
+            'categories' => Category::all()
+        ]);
+    }
+    
     public function edit(Category $category)
     {
-        //
+        return view('admin.update_category', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -82,7 +108,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validation = [];
+        if(!$request->name || ($request->name && $request->name != $category->name)){
+            $validation['name'] = 'required|unique:categories';
+        }
+        if ($request->image) {
+            $validation['image'] = 'mimes:jpg,jpeg,svg,png,webp,avif';
+        }
+
+        $validated = $request->validate($validation);
+
+        if ($request->image) {
+            Storage::disk('public')->delete(Category::whereId($category->id)->first()->image);
+            $validated['image'] = $request->file('image')->store('categories', 'public');
+        }
+
+        Category::whereId($category->id)->update($validated);
+        return redirect()->route('view-update')
+            ->with('successMsg', $request->name . ' category updated successfully.');
     }
 
     /**

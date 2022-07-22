@@ -7,16 +7,22 @@
     <div class="container-fluid col-10 rounded border mt-3 py-3">
         <form action="{{ route('promos.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="col-md-6 pe-3 mb-4">
-                <label for="lesson" class="form-label">Lesson</label>
-                <select class="form-select @error('lesson') is-invalid @enderror" id="lesson" name="lesson">
-                    <option value="" {{ old('lesson') ? '' : 'selected' }}>Select lesson</option>
-                    @foreach ($lessons as $lesson)
-                        <option value="{{ $lesson->id }}" {{ $lesson->id == old('lesson') ? 'selected' : '' }}>
-                            {{ $lesson->lesson_name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            @if (auth()->guard('course')->check())
+                {{-- Tampilkan dropdown jika yang login adalah course --}}
+                <div class="col-md-6 pe-3 mb-4">
+                    <label for="lesson" class="form-label">Lesson</label>
+                    <select class="form-select @error('lesson') is-invalid @enderror" id="lesson" name="lesson">
+                        <option value="" {{ old('lesson') ? '' : 'selected' }}>Select lesson</option>
+                        @foreach ($lessons as $lesson)
+                            <option value="{{ $lesson->id }}" {{ $lesson->id == old('lesson') ? 'selected' : '' }}>
+                                {{ $lesson->lesson_name }}</option>
+                        @endforeach
+                    </select>
+                    {{-- Send id dummy kalau admin --}}
+                </div>
+            @else
+                <input type="hidden" name="lesson" value="1">
+            @endif
 
             <div class="d-flex justify-content-between mb-4">
                 <div class="col-md-6 pe-3">

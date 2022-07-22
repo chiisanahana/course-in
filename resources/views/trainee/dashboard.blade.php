@@ -35,6 +35,18 @@
         </div>
     @endif
 
+    {{-- Untuk leave rating jika ada course yang belum diberi rating --}}
+    <div class="card bg-info border-0 shadow-sm mt-4 mb-5 alert alert-dismissible fade show" role="alert">
+        <div class="card-body py-1">
+            <h4 class="card-title">Leave a review here! 
+                <i class="fa-solid fa-star text-warning"></i>
+            </h4>
+            <p class="card-text mb-4">Show some love and support for your beloved courses ^_^</p>
+            <a href="{{ route('view-rating') }}" class="text-primary">Click here to rate</a>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     {{-- Promo yang sedang berlangsung --}}
     <h5 class="fw-bold mt-4 mb-3">🔥 Hot Promo 🔥</h5>
     @if ($promos->count())

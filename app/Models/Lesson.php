@@ -11,7 +11,7 @@ class Lesson extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
-
+    
     // accessor price attribute yang sudah diformat untuk mempermudah proses
     public function getPriceAttribute()
     {
