@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\isEmpty;
+
 class Schedule extends Model
 {
     use HasFactory;
@@ -43,7 +45,7 @@ class Schedule extends Model
     // accessor schedule time dengan format [start_lesson - end_lesson]
     public function getScheduleTimeAttribute()
     {
-        return $this->getStartLessonAttribute().' - '.$this->getEndLessonAttribute();
+        return $this->getStartLessonAttribute() . ' - ' . $this->getEndLessonAttribute();
     }
 
     public function scopeIsExists($query, $lesson_id, $date, $start_lesson, $end_lesson)
@@ -55,13 +57,6 @@ class Schedule extends Model
         } else {
             return false;
         }
-    }
-
-    public function scopeAvailableSchedule($query, $user_id)
-    {
-        $paymentDate = Carbon::create(Payment::where('user_id', $user_id)->first()->created_at->toDateString());
-        return $query->where('user_id', $user_id)
-            ->whereBetween('date', [$paymentDate->toDateString(), $paymentDate->addMonth()->toDateString()]);
     }
 
     public function lesson()

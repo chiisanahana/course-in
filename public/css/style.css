@@ -12,9 +12,14 @@
     object-fit: cover;
 }
 
-.lesson-select img {
+.img-overlay img {
     height: 100%;
     object-fit: cover;
+}
+
+#carousel img {
+    height: 30vw;
+    object-fit: contain;
 }
 
 #paymentMethod .accordion-button::after {

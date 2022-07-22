@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="ms-auto me-5">
                                     {{ $schedules->groupBy('lesson_id')->count() }} classes,
-                                    {{ $schedules->groupBy('id')->count() }} sessions
+                                    {{ $schedules->count() }} sessions
                                 </div>
                             </div>
 
@@ -38,9 +38,9 @@
                                         <div class="d-flex gap-3">
                                             {{ $schedule->lesson->lesson_name }}
                                             <div class="vr"></div>
-                                            {{ $schedule->lesson->lesson_name }}
+                                            {{ $schedule->schedule_time }}
                                             <span
-                                                class="badge bg-primary rounded-pill ms-auto my-auto px-2">{{ $schedule->type }}</span>
+                                                class="badge bg-primary rounded-pill ms-auto my-auto px-2">{{ $schedule->lesson->type }}</span>
                                         </div>
                                         <small class="text-muted">{{ $schedule->lesson->course->name }}</small>
                                     </li>
@@ -49,12 +49,12 @@
                         </div>
                     </div>
                 </div>
+            @endforeach
         </div>
-    @endforeach
-@else
-    <div class="d-flex flex-column w-100 gap-3 mt-5">
-        <h5 class="text-center text-muted">You are free for the time being</h5>
-        <h1 class="text-center text-muted">(～￣▽￣)～</h1>
-    </div>
+    @else
+        <div class="d-flex flex-column w-100 gap-3 mt-5">
+            <h5 class="text-center text-muted">You are free for the time being</h5>
+            <h1 class="text-center text-muted">(～￣▽￣)～</h1>
+        </div>
     @endif
 @endsection

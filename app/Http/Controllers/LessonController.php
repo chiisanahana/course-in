@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Lesson;
+use App\Models\Payment;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,11 +26,11 @@ class LessonController extends Controller
 
     public function traineeCourses()
     {
+        $lessonsPaid = Payment::where('user_id', auth()->guard('user')->user()->id)
+            ->whereBetween('payments.created_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->pluck('lesson_id')->toArray();
         return view('lessons.index_trainee', [
-            'lessons' => Lesson::join('payments', 'lesson_id', '=', 'lessons.id')
-                ->where('user_id', auth()->guard('user')->user()->id)
-                ->whereBetween('payments.created_at', [now()->startOfMonth(), now()->endOfMonth()])
-                ->get()
+            'lessons' => Lesson::whereIn('id', $lessonsPaid)->get()
         ]);
     }
 
