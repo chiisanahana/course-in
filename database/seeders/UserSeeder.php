@@ -17,8 +17,10 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
+            'wa_number' => '0812-1234-4321',
+            'address' => 'Jakarta',
             'password' => bcrypt('password'),
-            'role_id' => 3,
+            'role_id' => 1,
         ]);
     }
 }
