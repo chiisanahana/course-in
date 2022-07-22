@@ -29,6 +29,6 @@
                 </div>
             @endforeach
         </div>
-        <p class="text-end"><a href="/courses-in-demand" class="text-decoration-none">View More</a></p>
+        <!-- <p class="text-end"><a href="/courses-in-demand" class="text-decoration-none">View More</a></p> -->
     </div>
 @endsection

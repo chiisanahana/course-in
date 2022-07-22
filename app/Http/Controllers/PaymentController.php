@@ -45,6 +45,12 @@ class PaymentController extends Controller
         $payment->user_id = Auth::guard('user')->user()->id;
         $payment->payment_method = 'Card';
         $payment->amount = $req->total_price;
+        $used_promo = Promo::where('code', $req->promo_code)->first();
+        if(!$used_promo){
+            $payment->promo_id = 0;
+        }else{
+            $payment->promo_id = $used_promo->id;
+        }
         $payment->save();
 
         // Instantiate timetable setelah payment berhasil
@@ -63,6 +69,12 @@ class PaymentController extends Controller
         $payment->user_id = Auth::guard('user')->user()->id;
         $payment->payment_method = 'QRIS';
         $payment->amount = $req->total_price;
+        $used_promo = Promo::where('code', $req->promo_code)->first();
+        if(!$used_promo){
+            $payment->promo_id = 0;
+        }else{
+            $payment->promo_id = $used_promo->id;
+        }
         $payment->save();
 
         // Instantiate timetable setelah payment berhasil
@@ -118,14 +130,14 @@ class PaymentController extends Controller
     }
 
     public function paymentHistory(){
-        $payments = Payment::where('user_id', Auth::guard('user')->user()->id)->get();
-        $total = 0;
-        foreach($payments as $payment){
-            $total += $payment->amount;
-        }
+        $payments = Payment::where('user_id', Auth::guard('user')->user()->id);
+        $cardCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'Card')->count();
+        $qrisCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'QRIS')->count();
         return view('trainee.payment_history', [
-            'payments' => $payments,
-            'total' => $total
+            'payments' => $payments->get(),
+            'total' => $payments->sum('amount'),
+            'cardCount' => $cardCount,
+            'qrisCount' => $qrisCount
         ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
@@ -106,6 +107,9 @@ class LessonController extends Controller
      */
     public function edit(Lesson $lesson)
     {
+        if (auth()->guard('course')->user()->id != $lesson->course_id) {
+            abort(403);
+        }
         return view('lessons.edit', [
             'lesson' => $lesson,
             'categories' => Category::all()
@@ -155,6 +159,9 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
+        if (auth()->guard('course')->user()->id != $lesson->course_id) {
+            abort(403);
+        }
         Storage::disk('public')->delete($lesson->image);
         Lesson::whereId($lesson->id)->delete();
         toast('Successfully deleted a lesson!', 'success');

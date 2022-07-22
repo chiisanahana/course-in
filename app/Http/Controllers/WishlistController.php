@@ -19,8 +19,7 @@ class WishlistController extends Controller
     public function store(Request $request)
     {
         WishlistItem::create([
-            // 'wishlist_id' => auth()->user()->wishlist->id,
-            'wishlist_id' => '1',
+            'wishlist_id' => auth()->guard('user')->user()->wishlist->id,
             'lesson_id' => $request->lesson_id
         ]);
         toast('Lesson has been added to wishlist!', 'success');
@@ -29,9 +28,8 @@ class WishlistController extends Controller
 
     public function destroy(Lesson $lesson)
     {
-        // $item = WishlistItem::where('wishlist_id', auth()->user()->wishlist->id)
-        //             ->where('lesson_id', $lesson->id)->first();
-        $item = WishlistItem::where('wishlist_id', '1')->where('lesson_id', $lesson->id)->first();
+        $item = WishlistItem::where('wishlist_id', auth()->guard('user')->user()->wishlist->id)
+            ->where('lesson_id', $lesson->id)->first();
         WishlistItem::destroy($item->id);
         toast('Lesson has been removed from wishlist!', 'success');
         return back();

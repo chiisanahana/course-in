@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VerifyLogin
+class VerifyTrainee
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class VerifyLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::guard('user')->check() && !Auth::guard('course')->check()) {
+        if (!Auth::guard('user')->check()) {
             return redirect()->route('view-login');
         }
         return $next($request);

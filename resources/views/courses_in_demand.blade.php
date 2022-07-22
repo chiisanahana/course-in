@@ -19,7 +19,7 @@
             @foreach ($lessons as $lesson)
                 <div class="col">
                     <div class="card h-100">
-                        <img src="https://cdn.dribbble.com/users/2417352/screenshots/14633018/media/4765536253e54d55e6e6710a71376406.png?compress=1&resize=400x300"
+                        <img src="/storage/{{ $lesson->image }}"
                             class="card-img-top" alt="{{ $lesson->lesson_name }}">
                         <div class="card-body">
                             <h5 class="card-title mb-0">{{ $lesson->lesson_name }}</h5>

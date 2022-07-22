@@ -105,6 +105,7 @@
                                 <p class="fw-bold">Total</p> 
                                 <p"><span class="fas"><strong>{{'IDR '.number_format($total_price)}}</strong></span></p> 
                             </div>
+                            <input type="hidden" name="promo_code" value="{{$promo}}">
                             <button type="submit" style="text-decoration: none; border:none; background-color:white">
                                 <div class="btn btn-primary mt-2">
                                     VERIFY MY PAYMENT

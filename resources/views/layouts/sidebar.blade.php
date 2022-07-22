@@ -11,8 +11,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('lessons.trainee') ? 'text-light active' : '' }}" 
-                    href="{{ route('lessons.trainee') }}">
+                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('lessons.trainee') ? 'text-light active' : '' }}"
+                        href="{{ route('lessons.trainee') }}">
                         <i class="bi bi-list-stars h4 m-0"></i>
                         <span class="menu ps-3">Courses</span>
                     </a>
@@ -26,8 +26,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('payment-history') ? 'text-light active' : '' }}"
-                    href="{{ route('payment-history') }}"
-                    href="">
+                        href="{{ route('payment-history') }}" href="">
                         <i class="bi bi-credit-card h4 m-0"></i>
                         <span class="menu ps-3">Payment</span>
                     </a>
@@ -48,12 +47,6 @@
                         <span class="menu ps-3">Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center" href="#">
-                        <i class="bi bi-bookmark-star-fill h4 m-0"></i>
-                        <span class="menu ps-3">Booking</span>
-                    </a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('lessons.index') ? 'text-light active' : '' }}"
                         href="{{ route('lessons.index') }}">
@@ -73,6 +66,13 @@
                         href="{{ route('schedules.index') }}">
                         <i class="bi bi-calendar-week h4 m-0"></i>
                         <span class="menu ps-3">Schedule</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('view-promo') ? 'text-light active' : '' }}"
+                        href="{{ route('view-promo') }}">
+                        <i class="bi bi-tags-fill h4 m-0"></i>
+                        <span class="menu ps-3">Promo</span>
                     </a>
                 </li>
             @endif

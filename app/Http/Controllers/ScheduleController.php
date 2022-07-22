@@ -113,6 +113,9 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
+        if (auth()->guard('course')->user()->id != $schedule->lesson->course_id) {
+            abort(403);
+        }
         return view('course.schedules.edit', [
             'schedule' => $schedule
         ]);
@@ -179,6 +182,9 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
+        if (auth()->guard('course')->user()->id != $schedule->lesson->course_id) {
+            abort(403);
+        }
         Schedule::whereId($schedule->id)->delete();
         toast('Successfully deleted a schedule!', 'success');
         return redirect()->route('schedules.index');

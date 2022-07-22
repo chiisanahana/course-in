@@ -47,6 +47,8 @@
 
     <script src="/js/app.js"></script>
     <script src="/js/sidebar.js"></script>
+    <script src="https://kit.fontawesome.com/f2d0d59235.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

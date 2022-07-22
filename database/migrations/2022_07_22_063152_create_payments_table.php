@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id(); 
             $table->foreignId('lesson_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->integer('promo_id')->default(0);
             $table->string('payment_method');
             $table->integer('amount');
             $table->timestamps();

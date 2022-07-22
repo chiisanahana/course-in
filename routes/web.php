@@ -7,14 +7,12 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PromoControler;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Middleware\VerifyLogin;
-use App\Http\Middleware\VerifyLogout;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,12 +36,12 @@ Route::resource('categories', CategoryController::class);
 // Route::get('/profile', function() {
 //     return view('profile');
 // });
-Route::get('/addcategory', function(){
+Route::get('/addcategory', function () {
     return view('add_categories');
 });
 
 // Hanya bisa diakses guest
-Route::middleware([VerifyLogout::class])->group(function () {
+Route::middleware('guest')->group(function () {
     Route::get('/', [LandingPageController::class, 'course_in_demand'])->name('landing-page');
     Route::get('/login', [LoginController::class, 'viewLogin'])->name('view-login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -51,29 +49,36 @@ Route::middleware([VerifyLogout::class])->group(function () {
     Route::post('/register', [RegisterController::class, 'store'])->name('register');
 });
 
-// Hanya bisa diakses logged-in users
-Route::middleware([VerifyLogin::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile/{id}', [DashboardController::class, 'profile'])->name('view-profile');
-    Route::post('/profile', [ProfileController::class, 'profile'])->name('update-profile');
-    Route::post('/addLibur', [ProfileController::class, 'add_libur'])->name('add-libur');
-    Route::post('/removeLibur', [ProfileController::class, 'remove_libur'])->name('remove-libur');
+// Hanya bisa diakses oleh trainee
+Route::middleware('trainee')->group(function () {
     Route::get('/payment-history', [PaymentController::class, 'paymentHistory'])->name('payment-history');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::post('/wishlist/{lesson}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    Route::get('/schedules/show/{date}', [ScheduleController::class, 'show'])->name('schedules.show');
-    Route::resource('schedules', ScheduleController::class)->except(['show']);
     Route::get('/timetables', [TimetableController::class, 'index'])->name('timetables.index');
     Route::get('/payment/{lesson:id}/{promo:id?}', [PaymentController::class, 'viewPayment'])->name('view-payment');
-    Route::get('/promo/{lesson:id}/{page?}', [PaymentController::class, 'viewPromo'])->name('browse-promo');
     Route::post('/payment/{lesson:id}/{promo:id?}', [PaymentController::class, 'validatePayment'])->name('validate-payment');
     Route::get('/qrcode/{lesson:id}/{promo:id?}', [PaymentController::class, 'qrPayment'])->name('qr-payment');
     Route::post('/qrcode/{lesson:id}/{promo:id?}', [PaymentController::class, 'validateQr'])->name('validate-qr');
     Route::get('/loading-payment', [PaymentController::class, 'loadingPayment'])->name('qr-verify');
     Route::get('/available-promo/{lesson}', [PaymentController::class, 'availablePromo']);
-    Route::get('/revenue', [RevenueController::class, 'view_revenue'])->name('view-revenue');
-    // Route::post('/validate-promo/{lesson}', [PaymentController::class, 'validatePromo'])->name('validate-promo');
-    Route::resource('promos', PromoControler::class);
-    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+// Hanya bisa diakses oleh course
+Route::middleware('course')->group(function () {
+    Route::post('/addLibur', [ProfileController::class, 'add_libur'])->name('add-libur');
+    Route::post('/removeLibur', [ProfileController::class, 'remove_libur'])->name('remove-libur');
+    Route::get('/schedules/show/{date}', [ScheduleController::class, 'show'])->name('schedules.show');
+    Route::resource('schedules', ScheduleController::class)->except(['show']);
+    Route::get('/revenue', [RevenueController::class, 'view_revenue'])->name('view-revenue');
+    Route::get('/promos/create', [PromoController::class, 'create'])->name('promos.create');
+    Route::post('/promos', [PromoController::class, 'store'])->name('promos.store');
+    Route::get('/view-promo', [PromoController::class, 'index'])->name('view-promo');
+});
+
+// Bisa diakses 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/profile/{id}', [DashboardController::class, 'profile'])->name('view-profile');
+Route::post('/profile', [ProfileController::class, 'profile'])->name('update-profile');
+Route::get('/promo/{lesson:id}/{page?}', [PaymentController::class, 'viewPromo'])->name('browse-promo');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
