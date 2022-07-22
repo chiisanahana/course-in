@@ -6,26 +6,28 @@
     <div class="row row-cols-1 row-cols-md-3 mb-4 g-4">
         <div class="col">
             <div class="card h-100 shadow text-white">
-                <div class="card-body rounded d-flex flex-column justify-content-center" style="font-size: 15pt; background-color: #251e73;">
+                <div class="card-body rounded d-flex flex-column justify-content-center"
+                    style="font-size: 15pt; background-color: #251e73;">
                     <h5 class="card-title"><strong>Total Earnings :</strong></h5>
-                    <h1 class="text-center align-items-center my-0">{{ 'IDR ' . number_format($total) }}</h1>
+                    <h1 class="text-center align-items-center my-0">{{ 'IDR ' . number_format($revenue) }}</h1>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 shadow text-white">
-                <div class="card-body rounded d-flex flex-column justify-content-center" style="font-size: 15pt; background-color: #f1c000;">
-                    <h5 class="card-title"><strong>Total Transactions :</strong></h5>
-                    <h1 class="text-center align-items-center my-0">{{$payments->count()}} Transactions</h1>
+                <div class="card-body rounded d-flex flex-column justify-content-center"
+                    style="font-size: 15pt; background-color: #f1c000;">
+                    <h5 class="card-title"><strong>Total Transactions by Card:</strong></h5>
+                    <h1 class="text-center align-items-center my-0">{{ $cardCount }}</h1>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 shadow text-white">
-                <div class="card-body rounded d-flex flex-column justify-content-center" style="font-size: 11pt; background-color: #3d796f;">
-                    <h5 class="card-title"><strong>Details :</strong></h5>
-                    <h1 class="text-start align-items-center my-0">{{$countCourse}} Lesson(s)</h1>
-                    <h1 class="text-start align-items-center my-0">{{$countTrainee}} Trainee(s)</h1>
+                <div class="card-body rounded d-flex flex-column justify-content-center"
+                    style="font-size: 11pt; background-color: #3d796f;">
+                    <h5 class="card-title"><strong>Total Transactions by QRIS:</strong></h5>
+                    <h1 class="text-start align-items-center my-0">{{ $qrisCount }}</h1>
                 </div>
             </div>
         </div>
@@ -39,7 +41,7 @@
                 <th class="col-2">Transaction Date</th>
                 <th class="col-4">Trainee Name</th>
                 <th class="col-4">Lesson Name</th>
-                <th class="col-2">Total Price</th>
+                <th class="col-2">Price</th>
             </tr>
         </thead>
         <tbody>

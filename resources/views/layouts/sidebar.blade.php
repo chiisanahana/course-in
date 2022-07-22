@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('revenue') ? 'text-light active' : '' }}"
+                    <a class="nav-link d-flex align-items-center justify-content-center {{ Request::routeIs('view-revenue') ? 'text-light active' : '' }}"
                         href="{{ route('view-revenue') }}">
                         <i class="bi bi-credit-card h4 m-0"></i>
                         <span class="menu ps-3">Revenue</span>
