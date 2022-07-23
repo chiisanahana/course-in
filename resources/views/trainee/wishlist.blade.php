@@ -27,7 +27,7 @@
 
                             <div class="d-flex justify-content-between align-items-center mt-auto px-3 pb-2">
                                 {{-- Button love untuk add dan remove wishlist --}}
-                                @if (auth()->guard('user')->user()->wishlist->hasItem($item->lesson->id))
+                                @if ($item->hasLesson($item->lesson->id))
                                     {{-- Kalau sudah ada di wishlist, ini tombol untuk remove nya --}}
                                     <form action="{{ route('wishlist.destroy', $item->lesson->id) }}" method="POST">
                                         @csrf

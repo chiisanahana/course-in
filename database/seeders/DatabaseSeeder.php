@@ -20,7 +20,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LessonSeeder::class,
             ScheduleSeeder::class,
-            PromoSeeder::class
+            PromoSeeder::class,
+            WishlistSeeder::class,
+            PaymentSeeder::class,
+            TimetableSeeder::class
         ]);
     }
 }

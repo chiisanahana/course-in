@@ -69,7 +69,8 @@
                                 <li><a class="dropdown-item h5" href="{{ route('view-payment', $lesson->id) }}">
                                         Pay by Card</a></li>
                                 <li>
-                                    <hr class="dropdown-divider">/li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li><a class="dropdown-item h5" href="{{ route('qr-payment', $lesson->id) }}">Pay by
                                         QRIS</a></li>
                             </ul>
@@ -80,6 +81,7 @@
 
                     {{-- Button untuk wishlist --}}
                     @if (!auth()->guard('user')->check() ||
+                        auth()->guard('user')->user()->role_id == 2 ||
                         !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
                         {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
                         <form action="{{ route('wishlist.store') }}" method="POST" class="col-5">

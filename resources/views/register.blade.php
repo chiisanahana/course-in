@@ -2,6 +2,7 @@
 
 @section('title', 'Register | CourseIn')
 @section('content')
+
     <body style="background-color: #eee;">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -88,7 +89,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fas bi-whatsapp fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="wa_number">WA Number</label>
                                                 <input type="text" id="wa_number"
@@ -101,7 +102,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fas bi-geo-alt-fill fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label for="address">Address</label>
                                                 <textarea class="form-control @error('address') is-invalid @enderror" id="address" rows="3" name="address">{{ old('address') }}</textarea>

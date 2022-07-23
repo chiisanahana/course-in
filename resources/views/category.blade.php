@@ -28,7 +28,7 @@
 
                             <div class="d-flex justify-content-between align-items-center mt-auto px-3 pb-2">
                                 {{-- Button love untuk add dan remove wishlist --}}
-                                @if (!auth()->guard('user')->check() ||
+                                @if (!auth()->guard('user')->check() || auth()->guard('user')->user()->role_id == 2 ||
                                     !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
                                     {{-- Kalau belum ada di wishlist atau belum login, ini tombol untuk add nya --}}
                                     <form action="{{ route('wishlist.store') }}" method="POST">

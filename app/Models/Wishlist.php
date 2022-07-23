@@ -13,7 +13,10 @@ class Wishlist extends Model
 
     public function scopeHasItem($query, $lesson_id)
     {
-        return WishlistItem::where('wishlist_id', $query->first()->id)->hasLesson($lesson_id);
+        dd($query->join('wishlist_items', 'wishlist_items.wishlist_id', '=', 'wishlists.id')
+        ->whereIn('wishlist_items.lesson_id', [$lesson_id])->get()->isEmpty());
+        return $query->join('wishlist_items', 'wishlist_items.wishlist_id', '=', 'wishlists.id')
+            ->whereIn('wishlist_items.lesson_id', [$lesson_id])->get()->isEmpty();
     }
 
     public function user()

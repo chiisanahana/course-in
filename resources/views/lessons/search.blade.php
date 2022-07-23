@@ -29,7 +29,8 @@
                             <div class="d-flex justify-content-between align-items-center mt-auto px-3 pb-2">
                                 {{-- Button love untuk add dan remove wishlist --}}
                                 @if (!auth()->guard('user')->check() ||
-                                    !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
+                                    (auth()->guard('user')->user()->role_id == 2 &&
+                                        !auth()->guard('user')->user()->wishlist->hasItem($lesson->id)))
                                     {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
                                     <form action="{{ route('wishlist.store') }}" method="POST">
                                         @csrf
@@ -47,7 +48,7 @@
                                         </button>
                                     </form>
                                 @endif
-                                
+
                                 {{-- Rating lesson --}}
                                 <div class="text-warning fw-bold m-0">
                                     <i class="bi bi-star-fill"></i> {{ $lesson->rating }}
