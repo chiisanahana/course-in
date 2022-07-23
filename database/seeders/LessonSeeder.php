@@ -21,7 +21,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Renata',
             'description' => 'We start introduction to the basic baking terminology, ingredients, flour characteristics, and the procedure of bread mixing. On the further level, this course precludes introduction to the basic pastry terminology, ingredients, cake mixing methods, and dessert presentation.',
             'price' => 800000,
-            'rating' => 9.5,
             'image' => 'lessons/professional_baking_and_pastry.jpg',
             'type' => 'Course',
         ]);
@@ -35,7 +34,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Calista',
             'description' => 'Do you want to master some delectable puds to finish off a delicious lunch or dinner with, or perhaps you just have a sweet tooth and love to bake? This Proper Pudding Class will teach you 3 delicious puddings that will hit the sweet spot every time!',
             'price' => 700000,
-            'rating' => 9.3,
             'image' => 'lessons/proper_pudding_class.webp',
             'type' => 'Course',
         ]);
@@ -49,7 +47,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Hendra',
             'description' => 'Intro to programming, unity fundamental, AR augmented reality development, flutter mobile apps development, front-end, back-end, data science fundamental, digital marketing fundamental, UI and UX',
             'price' => 1100000,
-            'rating' => 9.4,
             'image' => 'lessons/programming_lesson.webp',
             'type' => 'Course',
         ]);
@@ -63,7 +60,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Vincent',
             'description' => 'This course brings you to Beginner to Advance level by creating the complete most advanced creative project. You will be able to understand how to complete one project, how to handle project bugs, how to collaborate with teams, Core structures of MVC.',
             'price' => 1500000,
-            'rating' => 9.0,
             'image' => 'lessons/professional_laravel_course.jpg',
             'type' => 'Course',
         ]);
@@ -77,7 +73,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Michael Yeoh',
             'description' => 'Trading requires technique and understanding of technical analysis. Technical analysis consists of how to read candles, trends, and volumes. By understanding indicators in technical analysis, it can help traders in searching for entry and selling points in order to maximize the capital gains from the trade. Participate in this 30 minutes workshop to learn more.',
             'price' => 150000,
-            'rating' => 9.6,
             'image' => 'lessons/beyond_technical_analysis.jpg',
             'type' => 'Workshop',
         ]);
@@ -92,7 +87,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Josephine',
             'description' => 'This lesson focuses on basic handbuilding techniques like pinch and coil. In this lesson, you\'ll get the full experience from wedging to building. This workshop takes about two hours.',
             'price' => 300000,
-            'rating' => 9.5,
             'image' => 'lessons/beginner_handbuilding_lesson.jpg',
             'type' => 'Workshop',
         ]);
@@ -106,7 +100,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Calista',
             'description' => 'Future careers and many business opportunities lies ahead of you. Prepare yourself by learning Mandarin to communicate better with people. Learning will be adjusted according to the needs and requirements. Schedule and location will be flexible.',
             'price' => 450000,
-            'rating' => 9.4,
             'image' => 'lessons/hsk_level_3_mandarin.jpg',
             'type' => 'Course',
         ]);
@@ -119,7 +112,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Rini',
             'description' => 'Guided by professionals, yoga lesson could be very fun. Try our yoga lesson and enjoy our amenities available in our facility. We follow COVID-19 protocols and ensure the cleanliness of our yoga room for your maximum comfort.',
             'price' => 550000,
-            'rating' => 9.9,
             'image' => 'lessons/foundation_yoga.jpg',
             'type' => 'Course',
         ]);
@@ -133,7 +125,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Jonathan Kevin',
             'description' => 'Zealot Muay thai Camp first established in Jakarta in 2011. Our founder & Head coach Jeremias Abraham brings his expertise from Thailand where he received both a professional fighting experience and a prestigious certificate as Instructor at WMC Lamai Gym Koh Samui and Sinbi Muay thai Phuket.',
             'price' => 500000,
-            'rating' => 9.8,
             'image' => 'lessons/muay_thai.jpg',
             'type' => 'Course',
         ]);
@@ -147,7 +138,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Ivan',
             'description' => 'We offer a flexible learning system with comprehensive curriculum. We also teaches many collections of songs from jazz, lessonic, pop, movie soundtrack and many more! We received good reviews and have been teaching for more than 17 years. No need to worry since our we provide everything you need in our facility.',
             'price' => 700000,
-            'rating' => 9.2,
             'image' => 'lessons/basic_guitar_lessons.jpeg',
             'type' => 'Course',
         ]);
@@ -161,7 +151,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Jeason',
             'description' => 'Do you want to learn how to play guitar from the basics? Have you ever seen all the information about chords, guitar types and felt overwhelmed? With this course, eliminate all your guitar problems and learn to play like the perfect guitarist.',
             'price' => 50000,
-            'rating' => 9.2,
             'image' => 'lessons/how_to_play_guitar_in_2_hours.jpg',
             'type' => 'Workshop',
         ]);
@@ -173,7 +162,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Hairul',
             'description' => 'Badminton training from basic exercises, improving stroke and hit, correcting steps, and physical exercises. Fees already include shuttlecocks and court facility.',
             'price' => 800000,
-            'rating' => 9.6,
             'image' => 'lessons/dragon_badminton_lesson.jpg',
             'type' => 'Course',
         ]);
@@ -185,7 +173,6 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Niko',
             'description' => 'Learn badminton trick shots from basic to advance',
             'price' => 750000,
-            'rating' => 9.2,
             'image' => 'lessons/badminton_trick_shots.jpg',
             'type' => 'Course',
         ]);
