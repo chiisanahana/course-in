@@ -17,7 +17,7 @@ class VerifyTrainee
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::guard('user')->check()) {
+        if (!(Auth::guard('user')->check() && Auth::guard('user')->user()->role_id == 2)) {
             return redirect()->route('view-login');
         }
         return $next($request);

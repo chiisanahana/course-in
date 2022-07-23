@@ -52,12 +52,15 @@
             <div class="d-flex gap-3 mt-5">
                 @if (auth()->guard('course')->check() &&
                     auth()->guard('course')->user()->id == $lesson->course_id)
-                    {{-- Button untuk edit lesson --}}
+                    {{-- Button untuk course edit lesson --}}
                     <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-outline-primary col-5 fs-5 py-1">
                         Edit lesson
                     </a>
+                @elseif (!(auth()->guard('course')->check() ||
+                    (auth()->guard('user')->check() &&
+                        auth()->guard('user')->user()->role_id == 1)
+                ))
                     {{-- Untuk trainee atau guest --}}
-                @elseif (!auth()->guard('course')->check())
                     @if ($schedules->count())
                         {{-- Button untuk booking, dengan payment method --}}
                         <div id="payment_methods" class="btn-group dropup col-5">
@@ -81,8 +84,7 @@
 
                     {{-- Button untuk wishlist --}}
                     @if (!auth()->guard('user')->check() ||
-                        auth()->guard('user')->user()->role_id == 2 ||
-                        !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
+                            !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
                         {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
                         <form action="{{ route('wishlist.store') }}" method="POST" class="col-5">
                             @csrf

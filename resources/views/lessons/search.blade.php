@@ -27,26 +27,31 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mt-auto px-3 pb-2">
-                                {{-- Button love untuk add dan remove wishlist --}}
-                                @if (!auth()->guard('user')->check() ||
-                                    (auth()->guard('user')->user()->role_id == 2 &&
-                                        !auth()->guard('user')->user()->wishlist->hasItem($lesson->id)))
-                                    {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
-                                    <form action="{{ route('wishlist.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                                        <button type="submit" class="btn shadow-none p-0">
-                                            <i class="bi bi-heart h4"></i>
-                                        </button>
-                                    </form>
-                                @else
-                                    {{-- Kalau sudah ada di wishlist, ini tombol untuk remove nya --}}
-                                    <form action="{{ route('wishlist.destroy', $lesson->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn shadow-none p-0">
-                                            <i class="bi bi-heart-fill h4 text-danger"></i>
-                                        </button>
-                                    </form>
+                                @if (!(auth()->guard('course')->check() ||
+                                    (auth()->guard('user')->check() &&
+                                        auth()->guard('user')->user()->role_id == 1)
+                                ))
+                                    {{-- Button love untuk add dan remove wishlist --}}
+                                    @if (!auth()->guard('user')->check() ||
+                                        (auth()->guard('user')->user()->role_id == 2 &&
+                                            !auth()->guard('user')->user()->wishlist->hasItem($lesson->id)))
+                                        {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
+                                        <form action="{{ route('wishlist.store') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                                            <button type="submit" class="btn shadow-none p-0">
+                                                <i class="bi bi-heart h4"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        {{-- Kalau sudah ada di wishlist, ini tombol untuk remove nya --}}
+                                        <form action="{{ route('wishlist.destroy', $lesson->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn shadow-none p-0">
+                                                <i class="bi bi-heart-fill h4 text-danger"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 @endif
 
                                 {{-- Rating lesson --}}
