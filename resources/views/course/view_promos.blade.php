@@ -7,18 +7,26 @@
 
     @if ($promos->count())
         {{-- Kalau ada, tampilin semua --}}
-        <div class="row row-cols-1 g-4">
+        <div class="row row-cols-1 g-2">
             @foreach ($promos as $promo)
                 <div class="card ps-0 mb-2 bg-secondary">
                     <div class="row g-0">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <img src="{{ asset('storage/' . $promo->image) }}" class="img-fluid rounded-start"
                                 alt="{{ $promo->code }}">
                         </div>
                         <div class="col d-flex justify-content-between align-items-center pe-4">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">{{ $promo->code }}</h5>
+                                <h4 class="card-title fw-bold">{{ $promo->code }}</h4>
                                 <p class="h3 card-text">{{ $promo->discount * 100 }}%</p>
+                                @if (auth()->guard('user')->check() &&
+                                    auth()->guard('user')->user()->role_id == 1)
+                                    @if ($promo->apply_all == 1)
+                                        <p class="card-text text-muted">Applied for all lessons</p>
+                                    @else
+                                        <p class="card-text text-muted">{{ $promo->lesson->lesson_name }}</p>
+                                    @endif
+                                @endif
                             </div>
                             <div>
                                 <p class="h5 text-primary">Expires at {{ $promo->end_date }}</p>
