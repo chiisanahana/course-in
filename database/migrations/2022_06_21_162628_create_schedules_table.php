@@ -15,7 +15,9 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lesson_id')->constrained();
+            $table->foreignId('lesson_id')->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->date('date');
             $table->time('start_lesson');
             $table->time('end_lesson');

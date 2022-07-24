@@ -46,7 +46,6 @@
                 <h5 class="mb-0"><i class="bi bi-calendar-check"> </i>Workshop date :</h5>
                 <p>{{ $schedules[0]->full_date }}</p>
             @endif
-            {{-- <hr class="my-4"> --}}
             <p class="h5">Join the {{ Str::lower($lesson->type) }} now!</p>
             <div class="h5 text-primary fw-bold">{{ $lesson->price }}</div>
             <div class="d-flex gap-3 mt-5">

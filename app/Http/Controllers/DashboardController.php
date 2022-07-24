@@ -58,7 +58,10 @@ class DashboardController extends Controller
                     $paymentDate = Carbon::create($lessonPaid->created_at->toDateString());
                     $schedules = $schedules->merge(Schedule::where('lesson_id', $lessonPaid->lesson_id)
                         ->whereBetween('date', [$paymentDate->toDateString(), $paymentDate->addDays(30)->toDateString()])
-                        ->pluck('id')->toArray());
+                        ->join('lessons', 'lessons.id', '=', 'schedules.lesson_id')
+                        ->join('courses', 'courses.id', '=', 'lessons.course_id')
+                        ->where('active', 1)
+                        ->pluck('schedules.id')->toArray());
                 }
                 $schedules = $schedules->toArray();
 

@@ -22,7 +22,6 @@
                 @csrf
                 <!-- passing id user dan role -->
                 <input type="hidden" name="id" value="{{ $user->id }}">
-                <input type="hidden" name="role" value="{{ $user->role_id }}">
                 <div class="row container d-flex justify-content-center">
                     <div class="col-xl-9 col-md-12">
                         <div class="card user-card-full">
@@ -127,7 +126,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <!-- <h5 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Set </h5> -->
                                         <div class="row m-b-20 m-t-40">
                                             <div class="col-sm-6">
                                                 <!-- buat if untuk cek apakah libur == true, kalau true nampil teks apakah ingin memulai kembali les -->
@@ -137,8 +135,7 @@
                                                             <input class="form-check-input" type="checkbox"
                                                                 role="switch" name="checkbox" id="day_off"
                                                                 {{ $user->active == 0 ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="day_off">Set break
-                                                                off mode</label>
+                                                            <label class="form-check-label" for="day_off">Set holiday mode</label>
                                                         </div>
                                                     @endif
                                                 </div>

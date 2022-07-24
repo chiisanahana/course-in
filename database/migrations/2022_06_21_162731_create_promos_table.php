@@ -15,7 +15,8 @@ class CreatePromosTable extends Migration
     {
         Schema::create('promos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lesson_id')->constrained();
+            $table->foreignId('lesson_id')->constrained()->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('code')->unique();
             $table->float('discount', 5, 4);
             $table->date('end_date');

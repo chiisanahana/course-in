@@ -8,11 +8,20 @@ use App\Models\Payment;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except(['index', 'traineeCourses', 'search', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *

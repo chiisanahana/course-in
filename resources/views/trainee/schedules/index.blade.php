@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    {{-- * Notes: display semua jadwal  --}}
+    {{-- * Notes: display semua jadwal --}}
     <h4 class="mb-3">Your Course Schedules</h4>
     @if ($timetable->count())
         <div class="accordion" id="schedule">

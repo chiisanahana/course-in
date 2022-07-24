@@ -14,9 +14,11 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id(); 
-            $table->foreignId('lesson_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->id();
+            $table->foreignId('lesson_id')->constrained()->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')
+                ->onDelete('cascade');;
             $table->integer('promo_id')->default(0);
             $table->string('payment_method');
             $table->integer('amount');
