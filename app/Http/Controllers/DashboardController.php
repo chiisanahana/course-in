@@ -50,11 +50,20 @@ class DashboardController extends Controller
 
             // role_id 2 itu trainee
             if (auth()->guard('user')->user()->role_id == 2) {
-                $schedules = Schedule::join('payments', 'payments.lesson_id', '=', 'schedules.lesson_id')
-                    ->join('timetables', 'timetables.lesson_id', '=', 'schedules.lesson_id')
-                    ->where('payments.user_id', auth()->guard('user')->user()->id);
+                $lessonsPaid = Payment::where('user_id', auth()->guard('user')->user()->id)
+                    ->whereBetween('created_at', [now()->subMonth()->toDateString(), now()->toDateString()])
+                    ->select('lesson_id', 'created_at')->get();
+                $schedules = collect();
+                foreach ($lessonsPaid as $lessonPaid) {
+                    $paymentDate = Carbon::create($lessonPaid->created_at->toDateString());
+                    $schedules = $schedules->merge(Schedule::where('lesson_id', $lessonPaid->lesson_id)
+                        ->whereBetween('date', [$paymentDate->toDateString(), $paymentDate->addDays(30)->toDateString()])
+                        ->pluck('id')->toArray());
+                }
+                $schedules = $schedules->toArray();
+
                 return view('trainee.dashboard', [
-                    'timetables' => $schedules->whereMonth('date', date('m'))
+                    'timetables' => Schedule::whereIn('id', $schedules)
                         ->where('date', '>', Carbon::yesterday())
                         ->orderBy('date')
                         ->orderBy('start_lesson')

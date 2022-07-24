@@ -5,8 +5,8 @@
 @endsection
 
 @section('content')
-    {{-- * Notes: hanya display jadwal bulan ini --}}
-    <h4 class="mb-3">{{ now()->format('F Y') }}</h4>
+    {{-- * Notes: display semua jadwal  --}}
+    <h4 class="mb-3">Your Course Schedules</h4>
     @if ($timetable->count())
         <div class="accordion" id="schedule">
             @foreach ($timetable as $schedules)
