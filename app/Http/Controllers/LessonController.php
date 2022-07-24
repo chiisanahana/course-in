@@ -93,7 +93,7 @@ class LessonController extends Controller
         if (auth()->guard('user')->check() && auth()->guard('user')->user()->role_id == 2) {
             $is_paid = Payment::where('lesson_id', $lesson->id)
                 ->where('user_id', auth()->guard('user')->user()->id)
-                ->whereBetween('created_at', [now()->subMonth()->toDateString(), now()->toDateString()])
+                ->whereBetween('created_at', [now()->subMonth(), now()])
                 ->get()->isNotEmpty();
         }
         return view('lessons.detail', [

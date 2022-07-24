@@ -52,8 +52,8 @@ class ProfileController extends Controller
             Course::whereId($req->id)->update(array_diff_key($validated, array_flip(['confirm_password'])));
         } else {
             if ($req->prof_picture) {
-                Storage::disk('public')->delete(Course::whereId($req->id)->prof_picture);
-                $validated['prof_picture'] = $req->files('prof_picture')->store('prof_picture', 'public');
+                Storage::disk('public')->delete(User::whereId($req->id)->first()->prof_picture);
+                $validated['prof_picture'] = $req->file('prof_picture')->store('prof_picture', 'public');
             }
 
             User::whereId($req->id)->update(array_diff_key($validated, array_flip(['confirm_password'])));

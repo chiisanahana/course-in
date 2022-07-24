@@ -18,6 +18,10 @@
     object-fit: cover;
 }
 
+.profile img {
+    object-fit: cover;
+}
+
 #payment_methods button::after {
     content: none;
 }

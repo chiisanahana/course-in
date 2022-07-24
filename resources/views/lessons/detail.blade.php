@@ -18,7 +18,7 @@
             <p>{{ $lesson->course->name }},<br>
                 {{ $lesson->course->address }}</p>
             <h5 class="mb-0"><i class="bi bi-whatsapp"> </i>Contact :</h5>
-            <p>{{ $lesson->course->wa_number }}</p>
+            <p>{{ $lesson->course->formatted_wa_number }}</p>
             @if ($lesson->type == 'Course')
                 <h5 class="mb-0"><i class="bi bi-calendar-check"> </i>Available course schedule :</h5>
                 @if ($schedules->count())

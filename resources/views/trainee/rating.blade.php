@@ -32,6 +32,9 @@
             @endforeach
         </div>
     @else
-        Sorry, nothing to rate here.
+        <div class="d-flex flex-column gap-3 mt-5">
+            <h5 class="text-center text-muted">Sorry, nothing to rate here.</h5>
+            <h1 class="text-center text-muted">（︶^︶）</h1>
+        </div>
     @endif
 @endsection

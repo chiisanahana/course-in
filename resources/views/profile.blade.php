@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>CourseIn - Profile</title>
         <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
         <link rel="stylesheet" href="{{ asset('css/profile.css') }}">

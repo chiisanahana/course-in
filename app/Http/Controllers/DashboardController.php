@@ -51,7 +51,7 @@ class DashboardController extends Controller
             // role_id 2 itu trainee
             if (auth()->guard('user')->user()->role_id == 2) {
                 $lessonsPaid = Payment::where('user_id', auth()->guard('user')->user()->id)
-                    ->whereBetween('created_at', [now()->subMonth()->toDateString(), now()->toDateString()])
+                    ->whereBetween('created_at', [now()->subMonth(), now()])
                     ->select('lesson_id', 'created_at')->get();
                 $schedules = collect();
                 foreach ($lessonsPaid as $lessonPaid) {

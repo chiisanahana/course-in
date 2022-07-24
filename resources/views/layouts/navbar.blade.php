@@ -44,7 +44,7 @@
                         <a href="{{ route('view-profile',auth()->guard('course')->user()->id) }}">
                             @if (auth()->guard('course')->user()->prof_picture)
                                 <img src="{{ asset('/storage/' .auth()->guard('course')->user()->prof_picture) }}"
-                                    class="rounded-circle" alt="Profile" width="40" height="40">
+                                    class="rounded-circle profile" alt="Profile" width="40" height="40">
                             @else
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
                                     class="rounded-circle" alt="Profile" width="40">
@@ -66,10 +66,15 @@
             @elseif (auth()->guard('user')->check())
                 {{-- Pengecekan untuk trainee --}}
                 <ul class="ms-auto col-md-2 navbar-nav gap-3">
-                    <div>
+                    <div class="profile">
                         <a href="{{ route('view-profile',auth()->guard('user')->user()->id) }}">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
-                                class="rounded-circle" alt="Profile" width="40" height="40">
+                            @if (auth()->guard('user')->user()->prof_picture)
+                                <img src="{{ asset('/storage/' .auth()->guard('user')->user()->prof_picture) }}"
+                                    class="rounded-circle" alt="Profile" width="40" height="40">
+                            @else
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Sin_cara.png"
+                                    class="rounded-circle" alt="Profile" width="40" height="40">
+                            @endif
                         </a>
                     </div>
                     <div class="d-flex flex-column justify-content-center">

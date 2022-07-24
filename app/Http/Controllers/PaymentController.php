@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function viewPayment(Lesson $lesson, $promo = null)
-    {
+    public function viewPayment(Lesson $lesson, $promo = null) {
         if (!$promo) {
             $promo = 'PROMOCODE';
             $discounted_price = 0;
@@ -34,7 +33,7 @@ class PaymentController extends Controller
         $validateInput = $req->validate([
             'email' => 'required|email',
             'card_details' => 'required|regex:#^\d{16}$#',
-            'exp_date' => 'required|regex:#^[0-9][0-9]/[0-9][0-9]$#',
+            'exp_date' => 'required|date_format:m/y|after:yesterday',
             'cvv' => 'required|regex:#^[0-9][0-9][0-9]$#',
             'name' => 'required|alpha',
         ]);

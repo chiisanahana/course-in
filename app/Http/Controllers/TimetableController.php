@@ -15,7 +15,7 @@ class TimetableController extends Controller
     public function index()
     {
         $lessonsPaid = Payment::where('user_id', auth()->guard('user')->user()->id)
-            ->whereBetween('created_at', [now()->subMonth()->toDateString(), now()->toDateString()])
+            ->whereBetween('created_at', [now()->subMonth(), now()])
             ->select('lesson_id', 'created_at')->get();
         $schedules = collect();
         foreach ($lessonsPaid as $lessonPaid) {
