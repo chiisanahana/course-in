@@ -20,7 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('promo_id')->default(0);
             $table->string('payment_method');
             $table->integer('amount');
-            $table->integer('ratings')->default(0);
+            $table->float('ratings')->default(0.0);
             $table->timestamps();
         });
     }

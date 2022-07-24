@@ -15,12 +15,13 @@ class PromoSeeder extends Seeder
     public function run()
     {
         Promo::create([
-            'lesson_id' => '5',
+            'lesson_id' => '7',
             'code' => 'CLCIN20',
             'discount' => 0.2,
             'end_date' => '2022-08-31',
             'image' => 'promos/Basic Mandarin Class Banner.png',
-            'apply_all' => false
+            'apply_all' => false,
+            'usedTimes' => 1
         ]);
 
         Promo::create([
@@ -30,7 +31,7 @@ class PromoSeeder extends Seeder
             'end_date' => '2022-08-14',
             'image' => 'promos/Minimalist Yoga Banner.png',
             'apply_all' => false,
-            'usedTimes' => 1
+            'usedTimes' => 2
         ]);
 
         Promo::create([
@@ -40,7 +41,7 @@ class PromoSeeder extends Seeder
             'end_date' => '2022-08-31',
             'image' => 'promos/Yellow Abstract Summer Sale Banner.png',
             'apply_all' => true,
-            'usedTimes' => 2
+            'usedTimes' => 8
         ]);
     }
 }

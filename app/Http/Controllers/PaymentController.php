@@ -7,11 +7,11 @@ use App\Models\Payment;
 use App\Models\Promo;
 use App\Models\Timetable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function viewPayment(Lesson $lesson, $promo = null) {
+    public function viewPayment(Lesson $lesson, $promo = null)
+    {
         if (!$promo) {
             $promo = 'PROMOCODE';
             $discounted_price = 0;
@@ -38,53 +38,57 @@ class PaymentController extends Controller
             'name' => 'required|alpha',
         ]);
 
-        $payment = new Payment();
-        $payment->lesson_id = $lesson->id;
-        $payment->user_id = Auth::guard('user')->user()->id;
-        $payment->payment_method = 'Card';
-        $payment->amount = $req->total_price;
-        $used_promo = Promo::where('code', $req->promo_code)->first();
-        if (!$used_promo) {
-            $payment->promo_id = 0;
-        } else {
-            $used_promo->usedTimes += 1;
-            $used_promo->save();
-            $payment->promo_id = $used_promo->id;
+        if (!Payment::isExists(auth()->guard('user')->user()->id, $lesson->id)) {
+            $payment = new Payment();
+            $payment->lesson_id = $lesson->id;
+            $payment->user_id = auth()->guard('user')->user()->id;
+            $payment->payment_method = 'Card';
+            $payment->amount = $req->total_price;
+            $used_promo = Promo::where('code', $req->promo_code)->first();
+            if (!$used_promo) {
+                $payment->promo_id = 0;
+            } else {
+                $used_promo->usedTimes += 1;
+                $used_promo->save();
+                $payment->promo_id = $used_promo->id;
+            }
+            $payment->save();
+
+            // Instantiate timetable setelah payment berhasil
+            Timetable::create([
+                'user_id' => auth()->guard('user')->user()->id,
+                'lesson_id' => $lesson->id
+            ]);
+
         }
-        $payment->save();
-
-        // Instantiate timetable setelah payment berhasil
-        Timetable::create([
-            'user_id' => Auth::guard('user')->user()->id,
-            'lesson_id' => $lesson->id
-        ]);
-
         return view('trainee.payment.qr_loading');
     }
 
     public function validateQr(Request $req, Lesson $lesson)
     {
-        $payment = new Payment();
-        $payment->lesson_id = $lesson->id;
-        $payment->user_id = Auth::guard('user')->user()->id;
-        $payment->payment_method = 'QRIS';
-        $payment->amount = $req->total_price;
-        $used_promo = Promo::where('code', $req->promo_code)->first();
-        if (!$used_promo) {
-            $payment->promo_id = 0;
-        } else {
-            $used_promo->usedTimes += 1;
-            $used_promo->save();
-            $payment->promo_id = $used_promo->id;
+        if (!Payment::isExists(auth()->guard('user')->user()->id, $lesson->id)) {
+            $payment = new Payment();
+            $payment->lesson_id = $lesson->id;
+            $payment->user_id = auth()->guard('user')->user()->id;
+            $payment->payment_method = 'QRIS';
+            $payment->amount = $req->total_price;
+            $used_promo = Promo::where('code', $req->promo_code)->first();
+            if (!$used_promo) {
+                $payment->promo_id = 0;
+            } else {
+                $used_promo->usedTimes += 1;
+                $used_promo->save();
+                $payment->promo_id = $used_promo->id;
+            }
+            $payment->save();
+
+            // Instantiate timetable setelah payment berhasil
+            Timetable::create([
+                'user_id' => auth()->guard('user')->user()->id,
+                'lesson_id' => $lesson->id
+            ]);
+
         }
-        $payment->save();
-
-        // Instantiate timetable setelah payment berhasil
-        Timetable::create([
-            'user_id' => Auth::guard('user')->user()->id,
-            'lesson_id' => $lesson->id
-        ]);
-
         return view('trainee.payment.qr_loading');
     }
 
@@ -134,11 +138,11 @@ class PaymentController extends Controller
 
     public function paymentHistory()
     {
-        $payments = Payment::where('user_id', Auth::guard('user')->user()->id);
-        $cardCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'Card')->count();
-        $qrisCount = Payment::where('user_id', Auth::guard('user')->user()->id)->where('payment_method', 'QRIS')->count();
+        $payments = Payment::where('user_id', auth()->guard('user')->user()->id);
+        $cardCount = Payment::where('user_id', auth()->guard('user')->user()->id)->where('payment_method', 'Card')->count();
+        $qrisCount = Payment::where('user_id', auth()->guard('user')->user()->id)->where('payment_method', 'QRIS')->count();
         return view('trainee.payment_history', [
-            'payments' => $payments->get(),
+            'payments' => $payments->orderByDesc('created_at')->get(),
             'total' => $payments->sum('amount'),
             'cardCount' => $cardCount,
             'qrisCount' => $qrisCount

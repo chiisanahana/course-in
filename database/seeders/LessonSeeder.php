@@ -25,8 +25,8 @@ class LessonSeeder extends Seeder
             'image' => 'lessons/professional_baking_and_pastry.jpg',
             'type' => 'Course',
         ]);
-
-        //http://maisonbleu.id/professionalbaking/
+        // 1
+        //http://maisonbleu.id/professionalbaking/ 
 
         Lesson::create([
             'category_id' => '1',
@@ -35,10 +35,11 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Calista',
             'description' => 'Do you want to master some delectable puds to finish off a delicious lunch or dinner with, or perhaps you just have a sweet tooth and love to bake? This Proper Pudding Class will teach you 3 delicious puddings that will hit the sweet spot every time!',
             'price' => 700000,
+            'rating' => 8,
             'image' => 'lessons/proper_pudding_class.webp',
             'type' => 'Course',
         ]);
-
+        // 2
         // https://theavenuecookeryschool.com/shop/courses/dietary-specific-classes/proper-pudding-class/
 
         Lesson::create([
@@ -48,10 +49,11 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Hendra',
             'description' => 'Intro to programming, unity fundamental, AR augmented reality development, flutter mobile apps development, front-end, back-end, data science fundamental, digital marketing fundamental, UI and UX',
             'price' => 1100000,
+            'rating' => 9,
             'image' => 'lessons/programming_lesson.webp',
             'type' => 'Course',
         ]);
-
+        // 3
         //https://www.onetwocode.id/
 
         Lesson::create([
@@ -61,11 +63,11 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Mr. Vincent',
             'description' => 'This course brings you to Beginner to Advance level by creating the complete most advanced creative project. You will be able to understand how to complete one project, how to handle project bugs, how to collaborate with teams, Core structures of MVC.',
             'price' => 1500000,
-            'rating' => 7,
+            'rating' => 7.5,
             'image' => 'lessons/professional_laravel_course.jpg',
             'type' => 'Course',
         ]);
-
+        // 4
         // https://appstick.com.bd/courses/laravel-course/26
 
         Lesson::create([
@@ -79,7 +81,7 @@ class LessonSeeder extends Seeder
             'image' => 'lessons/beyond_technical_analysis.jpg',
             'type' => 'Workshop',
         ]);
-
+        // 5
         //https://www.ternakuang.id/academy/128
 
 
@@ -94,7 +96,7 @@ class LessonSeeder extends Seeder
             'image' => 'lessons/beginner_handbuilding_lesson.jpg',
             'type' => 'Workshop',
         ]);
-        
+        // 6
         //https://www.tanakitaceramics.com/bookings-checkout/beginner-handbuilding-lesson/book/43f8b9a7-8e99-43bd-a23d-6a42b39752b7/1656212400000/1656219600000/7adb0b14-b744-47d9-a26d-0d40c54951fd/484ef120-a81b-4ef4-97ee-ef2979be5bed/2mmoW0vwKcSFyxtOfCdKNXZgIkrHcDBgPALvULaQ4ZgrkJnM4EXfRL5CgFoLCjH6LD53kWaa5qClJluaDTn3jjrb5HMhIHZQDPzx?referral=daily_time_table_widget
         
         Lesson::create([
@@ -104,11 +106,11 @@ class LessonSeeder extends Seeder
             'lesson_teacher' => 'Ms. Calista',
             'description' => 'Future careers and many business opportunities lies ahead of you. Prepare yourself by learning Mandarin to communicate better with people. Learning will be adjusted according to the needs and requirements. Schedule and location will be flexible.',
             'price' => 450000,
-            'rating' => 8,
+            'rating' => 8.5,
             'image' => 'lessons/hsk_level_3_mandarin.jpg',
             'type' => 'Course',
         ]);
-        
+        // 7
         
         Lesson::create([
             'category_id' => '6',
@@ -116,12 +118,12 @@ class LessonSeeder extends Seeder
             'lesson_name' => 'Foundation Yoga',
             'lesson_teacher' => 'Ms. Rini',
             'description' => 'Guided by professionals, yoga lesson could be very fun. Try our yoga lesson and enjoy our amenities available in our facility. We follow COVID-19 protocols and ensure the cleanliness of our yoga room for your maximum comfort.',
-            'rating' => 9,
+            'rating' => 8,
             'price' => 550000,
             'image' => 'lessons/foundation_yoga.jpg',
             'type' => 'Course',
         ]);
-        
+        // 8
         //https://lessonpass.com/studios/orum-jakarta?search-id=71836129097457442
         
         Lesson::create([
@@ -135,7 +137,7 @@ class LessonSeeder extends Seeder
             'image' => 'lessons/muay_thai.jpg',
             'type' => 'Course',
         ]);
-        
+        // 9
         //https://zealotmuaythai.com/daanmogot.html
         
         Lesson::create([
@@ -144,12 +146,12 @@ class LessonSeeder extends Seeder
             'lesson_name' => 'Basic Guitar Lessons',
             'lesson_teacher' => 'Mr. Ivan',
             'description' => 'We offer a flexible learning system with comprehensive curriculum. We also teaches many collections of songs from jazz, lessonic, pop, movie soundtrack and many more! We received good reviews and have been teaching for more than 17 years. No need to worry since our we provide everything you need in our facility.',
-            'rating' => 9,
+            'rating' => 7.5,
             'price' => 700000,
             'image' => 'lessons/basic_guitar_lessons.jpeg',
             'type' => 'Course',
         ]);
-
+        // 10
         //https://ivanguitarstudio.com/school/
 
         Lesson::create([
@@ -158,10 +160,12 @@ class LessonSeeder extends Seeder
             'lesson_name' => 'How to Play Guitar in 2 hours?',
             'lesson_teacher' => 'Mr. Jeason',
             'description' => 'Do you want to learn how to play guitar from the basics? Have you ever seen all the information about chords, guitar types and felt overwhelmed? With this course, eliminate all your guitar problems and learn to play like the perfect guitarist.',
+            'rating' => '8',
             'price' => 50000,
             'image' => 'lessons/how_to_play_guitar_in_2_hours.jpg',
             'type' => 'Workshop',
         ]);
+        // 11
 
         Lesson::create([
             'category_id' => '9',
@@ -169,10 +173,12 @@ class LessonSeeder extends Seeder
             'lesson_name' => 'Dragon Badminton Lesson',
             'lesson_teacher' => 'Mr. Hairul',
             'description' => 'Badminton training from basic exercises, improving stroke and hit, correcting steps, and physical exercises. Fees already include shuttlecocks and court facility.',
+            'rating' => 9,
             'price' => 800000,
             'image' => 'lessons/dragon_badminton_lesson.jpg',
             'type' => 'Course',
         ]);
+        // 12
 
         Lesson::create([
             'category_id' => '9',
@@ -180,10 +186,11 @@ class LessonSeeder extends Seeder
             'lesson_name' => 'Badminton Trick Shots',
             'lesson_teacher' => 'Mr. Niko',
             'description' => 'Learn badminton trick shots from basic to advance',
-            'rating' => 6,
+            'rating' => 8,
             'price' => 750000,
             'image' => 'lessons/badminton_trick_shots.jpg',
             'type' => 'Course',
         ]);
+        // 13
     }
 }

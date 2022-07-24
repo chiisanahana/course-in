@@ -22,7 +22,7 @@ class RevenueController extends Controller
             $qrisCount = Payment::whereIn('lesson_id', $lessons)->where('payment_method', 'QRIS')->count();
 
             return view('course.revenue', [
-                'payments' => $payments->get(),
+                'payments' => $payments->orderByDesc('created_at')->get(),
                 'total' => $payments->sum('amount'),
                 'cardCount' => $cardCount,
                 'qrisCount' => $qrisCount,
@@ -34,7 +34,7 @@ class RevenueController extends Controller
     public function viewTransaction()
     {
         return view('admin.view_transaction', [
-            'payments' => Payment::all()
+            'payments' => Payment::orderByDesc('created_at')->get()
         ]);
     }
 
