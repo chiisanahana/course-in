@@ -61,7 +61,9 @@
                         auth()->guard('user')->user()->role_id == 1)
                 ))
                     {{-- Untuk trainee atau guest --}}
-                    @if ($schedules->count())
+                    @if ($is_paid)
+                        <button class="btn btn-primary col-5 fs-5 py-1" disabled>YOU'RE ALREADY IN</button>
+                    @elseif ($schedules->count())
                         {{-- Button untuk booking, dengan payment method --}}
                         <div id="payment_methods" class="btn-group dropup col-5">
                             <button type="button" class="btn btn-primary dropdown-toggle fw-bold fs-5 py-0"
@@ -84,7 +86,7 @@
 
                     {{-- Button untuk wishlist --}}
                     @if (!auth()->guard('user')->check() ||
-                            !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
+                        !auth()->guard('user')->user()->wishlist->hasItem($lesson->id))
                         {{-- Kalau belum ada di wishlist, ini tombol untuk add nya --}}
                         <form action="{{ route('wishlist.store') }}" method="POST" class="col-5">
                             @csrf

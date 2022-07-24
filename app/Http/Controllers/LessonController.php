@@ -89,13 +89,21 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
+        $is_paid = false;
+        if (auth()->guard('user')->check() && auth()->guard('user')->user()->role_id == 2) {
+            $is_paid = Payment::where('lesson_id', $lesson->id)
+                ->where('user_id', auth()->guard('user')->user()->id)
+                ->whereBetween('created_at', [now()->subMonth()->toDateString(), now()->toDateString()])
+                ->get()->isNotEmpty();
+        }
         return view('lessons.detail', [
             'lesson' => Lesson::whereId($lesson->id)->first(),
             'schedules' => Schedule::where('lesson_id', $lesson->id)
                 ->where('date', '>', Carbon::yesterday())
                 ->orderBy('date')
                 ->orderBy('start_lesson')
-                ->simplePaginate(5)
+                ->simplePaginate(5),
+            'is_paid' => $is_paid
         ]);
     }
 

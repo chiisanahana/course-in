@@ -42,13 +42,6 @@ class Lesson extends Model
         return $query->where('lesson_name', 'like', '%'.$searchKey.'%');
     }
 
-    // query scope untuk mengecek apakah sebuah lesson terdapat di dalam wishlist seorang user
-    public function scopeInUserWishlist($query, $lesson_id, $user_id)
-    {
-        // dd($query->where('user_id', $user_id)->has($lesson_id));
-        dd($query->whereHas('wishlistItem'));
-    }
-    
     public function category()
     {
         return $this->belongsTo(Category::class);
