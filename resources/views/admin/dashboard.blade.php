@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
                     <h1 class="card-title text-center my-4" style="font-size: 3rem"><strong>{{ $revenue }}</strong></h1>
-                    <h4 class="card-title text-center">Total Revenue</h4>
+                    <h4 class="card-title text-center">Total Transaction Amount</h4>
                 </div>
             </div>
         </div>
@@ -21,18 +21,17 @@
                     <i class="fa-solid bi-people-fill fa-3x"></i>
                     <h1 class="card-title text-center  my-4" style="font-size: 3rem"><strong>{{ $countTrainee }}</strong>
                     </h1>
-                    <h4 class="card-title text-center">Total Trainee</h4>
+                    <h4 class="card-title text-center">Total Trainee(s)</h4>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100 text-white" style=" background-color: #3d796f;">
-                {{-- <img src="..." class="card-img-top" alt="..."> --}}
                 <div class="card-body">
                     <i class="fa-solid bi-person-workspace fa-3x"></i>
                     <h1 class="card-title text-center  my-4" style="font-size: 3rem"><strong>{{ $countCourse }}</strong>
                     </h1>
-                    <h4 class="card-title text-center">Total Course</h4>
+                    <h4 class="card-title text-center">Total Course(s)</h4>
                 </div>
             </div>
         </div>

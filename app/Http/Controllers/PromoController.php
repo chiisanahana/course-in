@@ -12,7 +12,7 @@ class PromoController extends Controller
     public function index()
     {
         if (auth()->guard('course')->check()) {
-            $lessons = Lesson::where('course_id', auth()->guard('course')->user()->id)->pluck('id')->toARray();
+            $lessons = Lesson::where('course_id', auth()->guard('course')->user()->id)->pluck('id')->toArray();
             return view('course.view_promos', [
                 'promos' => Promo::whereIn('lesson_id', $lessons)
                     ->orWhere('apply_all', 1)->orderBy('end_date')->get()
