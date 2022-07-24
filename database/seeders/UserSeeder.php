@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'wa_number' => '0812-1234-4321',
+            'wa_number' => '081212344321',
             'address' => 'Jakarta',
             'password' => bcrypt('password'),
             'role_id' => 1,
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Calista Daphne',
             'email' => 'calista@gmail.com',
-            'wa_number' => '0812-7630-3591',
+            'wa_number' => '081276303591',
             'address' => 'Medan',
             'password' => bcrypt('password'),
             'role_id' => 2,
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Ivanco Gratio Hartono',
             'email' => 'ivanco@gmail.com',
-            'wa_number' => '0823-7199-4324',
+            'wa_number' => '082371994324',
             'address' => 'Palembang',
             'password' => bcrypt('password'),
             'role_id' => 2,
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Mulyani',
             'email' => 'mulyani@gmail.com',
-            'wa_number' => '0822-4690-9839',
+            'wa_number' => '082246909839',
             'address' => 'Bogor',
             'password' => bcrypt('password'),
             'role_id' => 2,
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Vincent',
             'email' => 'vincent@gmail.com',
-            'wa_number' => '0895-6059-85036',
+            'wa_number' => '0895605985036',
             'address' => 'Jakarta',
             'password' => bcrypt('password'),
             'role_id' => 2,
