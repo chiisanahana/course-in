@@ -49,7 +49,7 @@ class PromoController extends Controller
             'image' => 'required|file|image'
         ]);
 
-        if (auth()->guard('user')->user()->role_id == 1) {
+        if (auth()->guard('user')->check() && auth()->guard('user')->user()->role_id == 1) {
             $validatedData['apply_all'] = 1;
         }
 

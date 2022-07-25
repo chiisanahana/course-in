@@ -19,7 +19,7 @@ class LessonController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin')->except(['index', 'traineeCourses', 'search', 'show']);
+        $this->middleware('course')->except(['index', 'traineeCourses', 'search', 'show']);
     }
 
     /**
